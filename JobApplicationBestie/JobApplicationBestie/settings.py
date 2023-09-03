@@ -13,11 +13,13 @@ https://docs.djangoproject.com/en/4.2/ref/settings/
 import os
 
 from dotenv import load_dotenv
+
 load_dotenv()
 
 from pathlib import Path
 
 allowed_host=os.getenv("allowed_host")
+csrf_trusted=os.getenv("csrf_trusted")
 db_name=os.getenv("db_name")
 db_user=os.getenv("db_user")
 db_password=os.getenv("db_password")
@@ -42,6 +44,7 @@ DEBUG = True
 
 ALLOWED_HOSTS = [allowed_host]
 
+CSRF_TRUSTED_ORIGINS = [csrf_trusted]
 
 # Application definition
 
@@ -53,6 +56,11 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'JAB_Main',
+    'member',
+]
+
+AUTHENTICATION_BACKENDS = [
+    'django.contrib.auth.backends.ModelBackend',
 ]
 
 MIDDLEWARE = [

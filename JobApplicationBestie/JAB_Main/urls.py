@@ -1,6 +1,10 @@
+from django.contrib.auth import views as auth_views
 from django.urls import path
 from . import views
 
 urlpatterns = [
-    path('hello/', views.hello_world, name='hello_world'),
+    path('', views.home, name='home'),
+    path('home', views.home, name='home'),
+    
+
 ]
