@@ -11,27 +11,25 @@ https://docs.djangoproject.com/en/4.2/ref/settings/
 """
 
 import os
-
 from dotenv import load_dotenv
-
-load_dotenv()
-
 from pathlib import Path
-
-allowed_host=os.getenv("allowed_host")
-csrf_trusted=os.getenv("csrf_trusted")
-db_name=os.getenv("db_name")
-db_user=os.getenv("db_user")
-db_password=os.getenv("db_password")
-db_host=os.getenv("db_host")
-db_port=os.getenv("db_port")
 
 
 
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
-BASE_DIR = Path(__file__).resolve().parent.parent
+BASE_DIR = Path(__file__).resolve().parent.parent.parent
+ENV_FILE_PATH = BASE_DIR.joinpath('.env')
 
+load_dotenv(ENV_FILE_PATH)
+allowed_host=os.getenv("allowed_host")
+csrf_trusted=os.getenv("csrf_trusted")
+db_engine=os.getenv("db_engine")
+db_name=os.getenv("db_name")
+db_user=os.getenv("db_user")
+db_password=os.getenv("db_password")
+db_host=os.getenv("db_host")
+db_port=os.getenv("db_port")
 
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/4.2/howto/deployment/checklist/
@@ -106,7 +104,7 @@ WSGI_APPLICATION = 'JobApplicationBestie.wsgi.application'
 
 DATABASES = {
   'default': {
-    'ENGINE': 'django.db.backends.postgresql',
+    'ENGINE': db_engine,
     'NAME': db_name,
     'USER': db_user,
     'PASSWORD': db_password,
