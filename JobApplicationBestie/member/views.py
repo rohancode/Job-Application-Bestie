@@ -12,7 +12,7 @@ def login_user(request):
         
         if user is not None:
             login(request, user)
-            return redirect('login_user')
+            return redirect('jobs')
         else:
             messages.success(request, ("Username or password does not match!"))
             return redirect('login_user')
@@ -23,7 +23,7 @@ def login_user(request):
 def logout_user(request):
     messages.success(request, ("Logout Successfully!"))
     logout(request)
-    return redirect('login_user')
+    return redirect('home')
 
 
 def register_user(request):
@@ -35,7 +35,8 @@ def register_user(request):
             password = form.cleaned_data['password1']
             user = authenticate(username=username, password=password)
             login(request, user)
-            return render(request, 'authenticate/login.html',{})
+            return redirect('jobs')
+
     else:
         form = RegisterUserForm()
     return render(request, 'authenticate/register_user.html', {

@@ -5,12 +5,11 @@
     <center>
         <h1>Jobs</h1>
         <br/><br/>
-        <ul>
-            {% for job in job_all %}
-                <li>{{ job }}</li>
-            {% endfor %}
-        </ul>
-         
+        {% for job in job_all %}
+            <a href="{% url 'job_main' job.id %}">{{ job }}</a> 
+            <a href="{% url 'job_update' job.id %}">Update</a> 
+            <br/>
+        {% endfor %}  
     </center>
 
 {% endblock %}

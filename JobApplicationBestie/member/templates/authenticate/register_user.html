@@ -5,7 +5,7 @@
 {% if form.errors %}
 
     <div class="alert alert-warning alert-dismissible fade show" role="alert">
-        There was an error in the form
+        Oops! Something went wrong. Please review the following error details.
         <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
     </div>
 
@@ -14,20 +14,15 @@
 <h1>Register</h1>
 <br/>
 
-		<form action="{% url 'register_user' %}" method=POST>
-			{% csrf_token %}
+<form action="{% url 'register_user' %}" method=POST>
+    {% csrf_token %}
 
+    {{ form.as_p  }}
 
+    <br/><br/>
+    <input type="submit" value="Submit" class="btn btn-secondary">
 
-            {{ form.as_p  }}
-        
-            <br/><br/>
-			<input type="submit" value="Submit" class="btn btn-secondary">
-
-		</form>
- 
-
-<br/><br/>	
-
+</form> 
+<p>Please make sure to remember your username and password. We do not offer a password reset option since we do not collect email addresses.</p>
 
 {% endblock %}

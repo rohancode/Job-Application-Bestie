@@ -27,3 +27,22 @@ def jobs(request):
     return render(request, 'JAB_Main/jobs.html', {
         'job_all':job_all
     })
+
+
+def job_main(request, job_id):
+    job_case = Job.objects.get(pk=job_id) 
+    return render(request, 'JAB_Main/job_main.html', {
+        'job_case':job_case
+    })
+    
+def job_update(request, job_id):
+    job_case = Job.objects.get(pk=job_id) 
+    form = JobForm(request.POST or None, instance=job_case)
+    if form.is_valid():
+        form.save()
+        return redirect('jobs')
+
+    return render(request, 'JAB_Main/job_update.html', {
+        'job_case':job_case,
+        'form':form
+    })
