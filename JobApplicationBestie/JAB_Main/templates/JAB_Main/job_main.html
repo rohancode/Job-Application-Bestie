@@ -3,10 +3,19 @@
 {% block content %}
 
     <center>
-        <h1>Job:</h1>
-        <br/><br/>
+        
         {{ job_case }}
-         
+         <br/>
+         <a href="{% url 'cl_add' job_case.id %}">Add Cover Letter</a>
+         <br/>
+        {% for cl in cl_cases %}
+            <div>
+                {{ cl.text }}
+                <a href="{% url 'cl_update' cl.id %}">Edit</a> 
+                <a href="{% url 'cl_delete' cl.id  %}">Permanent Delete Cover Letter</a> 
+                <a href="{% url 'cl_download' cl.id  %}">Download Cover Letter</a> 
+            </div>
+        {% endfor %}
     </center>
 
 {% endblock %}

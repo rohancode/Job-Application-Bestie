@@ -21,7 +21,6 @@ def login_user(request):
 
 
 def logout_user(request):
-    messages.success(request, ("Logout Successfully!"))
     logout(request)
     return redirect('home')
 

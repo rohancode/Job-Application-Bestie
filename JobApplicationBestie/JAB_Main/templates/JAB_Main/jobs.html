@@ -2,14 +2,30 @@
 
 {% block content %}
 
-    <center>
+    <center>  
         <h1>Jobs</h1>
         <br/><br/>
+        <a href="{% url 'job_add' %}">Add Job</a> 
+        <br/><br/>
+        
         {% for job in job_all %}
-            <a href="{% url 'job_main' job.id %}">{{ job }}</a> 
-            <a href="{% url 'job_update' job.id %}">Update</a> 
+            {{ job }}
+            <a href="{% url 'job_main' job.id %}">Start Application</a> 
+            <a href="{% url 'job_update' job.id %}">Edit</a> 
+            <a href="{% url 'job_delete' job.id  %}">Permanent Delete Job</a> 
             <br/>
         {% endfor %}  
     </center>
+    {% if job_all.has_previous %}
+        <a href="?page=1">&laquo First</a>
+        <a href="?page={{ job_all.previous_page_number }}">Previous</a>
+    {% endif %}
+
+    Page {{ job_all.number }} of {{ job_all.paginator.num_pages }}
+
+    {% if job_all.has_next %}
+        <a href="?page={{ job_all.next_page_number }}">Next</a>
+        <a href="?page={{ job_all.paginator.num_pages }}">Last &raquo</a>
+    {% endif %}
 
 {% endblock %}
