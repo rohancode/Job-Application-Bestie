@@ -17,7 +17,7 @@ def home(request):
     if request.user.is_authenticated:
         return HttpResponseRedirect(reverse('jobs'))
     else:
-        return render(request, 'JAB_Main/home.html', {})
+        return render(request, 'JAB_Main/index.html', {})
 
 @login_required
 def job_add(request):
