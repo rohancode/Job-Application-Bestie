@@ -3,9 +3,9 @@ import io
 from django.shortcuts import render, redirect, reverse
 from django.contrib.auth.decorators import login_required
 from django.http import HttpResponse, FileResponse
-from .forms import JobForm, CLForm
+from .forms import JobForm, CLForm, SourceForm
 from django.http import HttpResponseRedirect
-from .models import Job, CoverLetter
+from .models import Job, CoverLetter, Source
 from django.core.paginator import Paginator
 
 from reportlab.pdfgen import canvas
@@ -29,7 +29,6 @@ def job_add(request):
             form_case = form.save(commit=False)
             form_case.user = current_user
             form_case.save()
-            job_id = form_case.id
             return HttpResponseRedirect(reverse('jobs')) 
 
     else:   
@@ -44,8 +43,25 @@ def jobs(request):
     paginator_head = Paginator(Job.objects.filter(user=current_user).order_by('-id'), 5)
     page = request.GET.get('page')
     job_all = paginator_head.get_page(page)
+
+    sources_base = [
+        "https://www.indeed.de",
+        "https://www.stepstone.de",
+        "https://www.monster.de",
+        "https://www.xing.com/jobs",
+        "https://www.linkedin.com",
+        "https://www.glassdoor.de",
+        "https://www.jobware.de",
+        "https://www.kimeta.de",
+        "https://www.stellenanzeigen.de"
+    ]
+
+    sources_user = Source.objects.filter(user=current_user).order_by('-id')
+
     return render(request, 'JAB_Main/jobs.html', {
-        'job_all':job_all
+        'job_all':job_all,
+        'sources_base':sources_base,
+        'sources_user':sources_user
     })
 
 @login_required
@@ -138,3 +154,49 @@ def cl_download(request, cl_id):
     buf.seek(0)
 
     return FileResponse(buf, as_attachment=True, filename='CoverLetter.pdf')
+
+@login_required
+def ui_dev_index_footer(request):
+    current_user = request.user
+    if current_user.is_superuser:
+        return render(request, 'JAB_Main/index/index_footer.html', {})
+
+
+@login_required
+def source_add(request):
+    submitted = False
+    if request.method == 'POST':
+        form = SourceForm(request.POST)
+        if form.is_valid():
+            current_user = request.user
+            form_case = form.save(commit=False)
+            form_case.user = current_user
+            form_case.save()
+            return HttpResponseRedirect(reverse('jobs')) 
+
+    else:   
+        form = SourceForm
+        if 'submitted' in request.GET:
+            submitted = True 
+    return render(request, 'JAB_Main/source_add.html', {'form':form, 'submitted':submitted})
+
+@login_required
+def source_update(request, source_id):
+    current_user = request.user
+    source_case = Source.objects.get(pk=source_id, user=current_user)
+    form = SourceForm(request.POST or None, instance=source_case)
+    if form.is_valid():
+        form.save()
+        return redirect('jobs')
+
+    return render(request, 'JAB_Main/source_update.html', {
+        'source_case':source_case,
+        'form':form
+    })
+
+@login_required
+def source_delete(request, source_id):
+    current_user = request.user
+    source_case = Source.objects.get(pk=source_id, user=current_user) 
+    source_case.delete()
+    return redirect('jobs')

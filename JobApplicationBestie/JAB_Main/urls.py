@@ -15,8 +15,12 @@ urlpatterns = [
     path('cl/<cl_id>/edit', views.cl_update, name='cl_update'),
     path('cl/<cl_id>/delete', views.cl_delete, name='cl_delete'),
     path('cl/<cl_id>/download', views.cl_download, name='cl_download'),
+
+    path('source/add', views.source_add, name='source_add'),
+    path('source/<source_id>/edit', views.source_update, name='source_update'),
+    path('source/<source_id>/delete', views.source_delete, name='source_delete'),
     
-    
+    path('ui_dev_index_footer', views.ui_dev_index_footer, name='ui_dev_index_footer'),
     
 
 ]

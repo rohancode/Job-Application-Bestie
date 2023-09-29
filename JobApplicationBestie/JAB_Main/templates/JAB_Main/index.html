@@ -1,37 +1,8 @@
 {% load static %}
-{% include 'JAB_Main/navbar.html' %}
-<!DOCTYPE html>
-<html lang="en" class="no-js">
-<head>
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-giJF6kkoqNQ00vy+HMDP7azOuL0xtbfIcaT9wjKHr8RbDVddVHyTfAAsrekwKmP1" crossorigin="anonymous">
-    <title>Job Application Bestie</title>
-    <meta charset="utf-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <link href="https://fonts.googleapis.com/css?family=Heebo:400,700|IBM+Plex+Sans:600" rel="stylesheet">
-    <link rel="stylesheet" href="{% static 'css/style.css' %}">
-    <script src="https://unpkg.com/scrollreveal@4.0.0/dist/scrollreveal.min.js"></script>
-    <style>
-        .main-background {
-            background-image: url("{% static 'images/cta-illustration-dark.svg' %}");
-            background-size: cover;
-            background-position: center;
-            background-repeat: no-repeat;
-        }
-        .site-footer.has-top-divider {
-            background-color: black;
-            color: white;
-        }
-        .site-footer-inner a {
-            color: white;
-            text-decoration: none;
-        }
-    </style>
-</head>
+{% include 'JAB_Main/utils/html_init.html' %}
+{% include 'JAB_Main/index/index_head.html' %}
 <body class="is-boxed has-animations">
-    
+    {% include 'JAB_Main/navbar.html' %}
     <div class="body-wrap boxed-container">
         <main class="main-background">
             <section class="hero">
@@ -39,7 +10,7 @@
                     <div class="hero-inner">
 						<div class="hero-copy">
 	                        <h1 class="hero-title mt-0">Job Application Bestie</h1>
-	                        <p class="hero-paragraph">Craft compelling cover letters effortlessly, and secure more interviews. No Credit Card or Email required.</p>
+	                        <p class="hero-paragraph">Craft personalized Cover Letters & Resumes, and secure more interviews. Beat AI both in quality and speed. No Credit Card or Email required.</p>
 	                        <div class="hero-cta">
 								<a class="button button-primary" href="{% url 'register_user' %}">Register For Free</a>
 							</div>
@@ -52,34 +23,11 @@
             </section>
         </main>
 
-        <footer class="site-footer has-top-divider">
-            <div class="container">
-                <div class="site-footer-inner">
-                    <ul class="footer-links list-reset">
-                        <li>
-                            <a href="https://github.com/rohancode/Job-Application-Bestie">Source Code</a>
-                        </li>
-                        <li>
-                            <a href="mailto:rohan.rathore93@gmail.com">Contact Us</a>
-                        </li>
-                        <li>
-                            <a href="#">Privacy Policy</a>
-                        </li>
-                        <li>
-                            <a href="#">Terms & Conditions</a>
-                        </li>
-                        <li>
-                            <a href="#">Data Security</a>
-                        </li>
-                    </ul>
-                    <div class="footer-copyright">A Hobby Project 🤗</div>
-                </div>
-            </div>
-        </footer>
+        {% include 'JAB_Main/index/index_footer.html' %}
     </div>
 
-    <script src="dist/js/main.min.js"></script>
+    {% include 'JAB_Main/index/index_bottom_scripts.html' %}
 </body>
-</html>
+{% include 'JAB_Main/utils/html_exit.html' %}
 
 
