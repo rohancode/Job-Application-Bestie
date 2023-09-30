@@ -3,7 +3,7 @@ import io
 from django.shortcuts import render, redirect, reverse
 from django.contrib.auth.decorators import login_required
 from django.http import HttpResponse, FileResponse
-from .forms import JobForm, CLForm, SourceForm
+from .forms import JobForm, CLForm, CLForm_Text, CLForm_Main, SourceForm
 from django.http import HttpResponseRedirect
 from .models import Job, CoverLetter, Source
 from django.core.paginator import Paginator
@@ -11,6 +11,9 @@ from django.core.paginator import Paginator
 from reportlab.pdfgen import canvas
 from reportlab.lib.units import inch
 from reportlab.lib.pagesizes import letter
+from reportlab.pdfbase import pdfmetrics
+from reportlab.pdfbase.ttfonts import TTFont
+
 
 
 def home(request):
@@ -29,6 +32,9 @@ def job_add(request):
             form_case = form.save(commit=False)
             form_case.user = current_user
             form_case.save()
+            job = Job.objects.get(pk=form_case.id)
+            cover_letter = CoverLetter(job=job, user=current_user)
+            cover_letter.save()
             return HttpResponseRedirect(reverse('jobs')) 
 
     else:   
@@ -63,16 +69,6 @@ def jobs(request):
         'sources_base':sources_base,
         'sources_user':sources_user
     })
-
-@login_required
-def job_main(request, job_id):
-    current_user = request.user
-    job_case = Job.objects.get(pk=job_id, user=current_user)
-    cl_cases = job_case.cover_letters_job.all().order_by('-id')
-    return render(request, 'JAB_Main/job_main.html', {
-        'job_case':job_case,
-        'cl_cases': cl_cases
-    })
     
 @login_required
 def job_update(request, job_id):
@@ -96,56 +92,87 @@ def job_delete(request, job_id):
     return redirect('jobs')
 
 @login_required
-def cl_add(request, job_id):
-    submitted = False
-    if request.method == 'POST':
-        form = CLForm(request.POST)
-        if form.is_valid():
-            current_user = request.user
-            form_case = form.save(commit=False)
-            form_case.user = current_user
-            job_case = Job.objects.get(pk=job_id, user=current_user) 
-            form_case.job = job_case
-            form_case.save()
-            job_id = job_case.id
-            return HttpResponseRedirect(reverse('job_main', args=[job_id]))
-    else:   
-        form = CLForm
-        if 'submitted' in request.GET:
-            submitted = True 
-    return render(request, 'JAB_Main/cl_add.html', {'form':form, 'submitted':submitted})
-
-@login_required
-def cl_update(request, cl_id):
+def cl_main(request, job_id):
     current_user = request.user
-    cl_case = CoverLetter.objects.get(pk=cl_id, user=current_user)
-    form = CLForm(request.POST or None, instance=cl_case)
-    if form.is_valid():
-        form.save()
-        job_id = cl_case.job.id
-        return HttpResponseRedirect(reverse('job_main', args=[job_id]))
+    job_case = Job.objects.get(pk=job_id, user=current_user)
+    cl_case = job_case.cover_letters_job
+    edit_mode_text = request.GET.get('edit_mode_text', '0') == '1'
+    edit_mode_update = request.GET.get('edit_mode_update', '0') == '1'
+    
+    if request.method == "POST" and edit_mode_text:
+        form_text = CLForm_Text(request.POST, instance=cl_case)
+        if form_text.is_valid() and request.GET.get('edit_mode_text', '0') == '1':
+            form_text.save()
+            job_id = cl_case.job.id
+            return HttpResponseRedirect(reverse('cl_main', args=[job_id]))
+    else:
+        form_text = CLForm_Text(instance=cl_case)
 
-    return render(request, 'JAB_Main/cl_update.html', {
-        'cl_case':cl_case,
-        'form':form
+    if request.method == "POST" and edit_mode_update:
+        form_update = CLForm(request.POST, instance=cl_case)
+        if form_update.is_valid() and request.GET.get('edit_mode_update', '0') == '1':
+            form_update.save()
+            job_id = cl_case.job.id
+            return HttpResponseRedirect(reverse('cl_main', args=[job_id]))
+    else:
+        form_update = CLForm(instance=cl_case)
+
+    return render(request, 'JAB_Main/cl_main.html', {
+        'job_case':job_case,
+        'cl_case': cl_case,
+        'form_text': form_text,
+        'edit_mode_text': edit_mode_text,
+        'form_update':form_update,
+        'edit_mode_update':edit_mode_update
     })
 
 @login_required
-def cl_delete(request, cl_id):
+def cl_proofread(request, cl_id):
     current_user = request.user
-    cl_case = CoverLetter.objects.get(pk=cl_id, user=current_user) 
-    job_id = cl_case.job.id
-    cl_case.delete()
-    return HttpResponseRedirect(reverse('job_main', args=[job_id])) 
+    cl_case = CoverLetter.objects.get(pk=cl_id, user=current_user)
+    job_case = cl_case.job
+    edit_mode_proofread_main = request.GET.get('edit_mode_proofread_main', '0') == '1'
+
+    if request.method == "POST" and edit_mode_proofread_main:
+        form_main = CLForm_Main(request.POST, instance=cl_case)
+        if form_main.is_valid() and request.GET.get('edit_mode_proofread_main', '0') == '1':
+            form_main.save()
+            return HttpResponseRedirect(reverse('cl_proofread', args=[cl_id]))
+    else:
+        form_main = CLForm_Main(instance=cl_case)
+    
+    return render(request, 'JAB_Main/cl_proofread.html', {
+        'cl_case':cl_case,
+        'job_case':job_case,
+        'form_main':form_main,
+        'edit_mode_proofread_main':edit_mode_proofread_main
+    })
 
 @login_required
 def cl_download(request, cl_id):
     current_user = request.user
     cl_case = CoverLetter.objects.get(pk=cl_id, user=current_user) 
+    job_case = cl_case.job
     buf = io.BytesIO()
     canvas_case = canvas.Canvas(buf, pagesize=letter, bottomup=0)
-    canvas_case.setFont('Helvetica', 14)
+    # pdfmetrics.registerFont(TTFont('Verdana', 'JobApplicationBestie/JAB_Main/templates/JAB_Main/Verdana.ttf'))
+    canvas_case.setFont('Helvetica', 12)
     y_position = inch
+    
+    canvas_case.drawRightString(7*inch, y_position, cl_case.main_self_name)
+    y_position += 20
+    
+    canvas_case.drawRightString(7*inch, y_position, cl_case.main_self_address)
+    y_position += 40
+
+    canvas_case.drawString(inch, y_position, job_case.company)
+    y_position += 20
+    
+    canvas_case.drawString(inch, y_position, job_case.address)
+    y_position += 40
+    
+    canvas_case.drawString(inch, y_position, cl_case.main_subject)
+    y_position += 20
     
     canvas_case.drawString(inch, y_position, cl_case.text)
     

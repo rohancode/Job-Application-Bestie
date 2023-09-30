@@ -2,7 +2,7 @@
 
 {% block content %}
     <div class="jobs_container">
-        <p><a href="{% url 'jobs' %}">Jobs</a> &gt;</p>
+        <p>Navigation: <a href="{% url 'jobs' %}">Jobs</a> &gt;</p>
     </div>
     <div class="jobs_container">
         <div class="jobs_left">
@@ -31,14 +31,14 @@
                         <th>Company</th>
                         <th>Position</th>
                         <th>URL</th>
+                        <th>Cover Letter</th>
+                        <th>Resume (Coming Soon)</th>
                         <th>Date Posted</th>
                         <th>Eligibility Confirm</th>
                         <th>Priority</th>
                         <th>Acceptance Chance</th>
                         <th>Documents Preptime Estimate</th>
-                        <th>Cover Letter</th>
-                        <th>Resume</th>
-                        <th>Applicant Sent</th>
+                        <th>Application Sent</th>
                     </tr>
                 </thead>
                 <tbody>
@@ -53,17 +53,17 @@
                         <td>
                             <a href="{{ job.URL }}">{{ job.URL }}</a>
                         </td>
+                        <td>
+                            <a href="{% url 'cl_main' job.id %}">Cover Letter Builder</a> 
+                        </td>
+                        <td>
+                            <a href="">Resume Builder</a>
+                        </td>
                         <td>{{ job.date_posted }}</td>
                         <td>{{ job.eligible_pre_check_good_idea }}</td>
                         <td>{{ job.priority }}</td>
                         <td>{{ job.acceptance_chance_feeling }}</td>
                         <td>{{ job.documents_prep_time_feeling }}</td>
-                        <td>
-                            <a href="{% url 'job_main' job.id %}">Cover Letter Builder</a> 
-                        </td>
-                        <td>
-                            <a href="">Resume Builder</a>
-                        </td>
                         <td>{{ job.application_sent_done }}</td>
                     </tr>
                     {% endfor %}

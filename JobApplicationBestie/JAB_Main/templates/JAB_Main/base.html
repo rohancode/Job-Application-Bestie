@@ -13,15 +13,22 @@
     <style>
       body {
         background: #ffffff;
-        font-family: sans-serif;
+        font-family: Helvetica;
         font-size: 14px;
       }
-      .job_main_container {
+      .cl_main_container {
           display: flex;
           justify-content: space-between;
       }
 
-      .job_main_left {
+      .cl_main_full {
+          padding: 20px;
+          background-color: white;
+          border-radius: 10px;
+          box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+          flex-basis: 100%;
+      }
+      .cl_main_left {
           padding: 20px;
           background-color: white;
           border-radius: 10px;
@@ -29,12 +36,23 @@
           flex-basis: 49%;
       }
 
-      .job_main_right {
+      .cl_main_right {
           padding: 20px;
           background-color: white;
           border-radius: 10px;
           box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
           flex-basis: 49%;
+      }
+      .cl_main_top, .cl_main_bottom {
+          flex: 1;
+          flex-basis: 49%;
+          flex-grow: 0;
+          flex-shrink: 0;
+          padding: 20px;
+          background-color: white;
+          border-radius: 10px;
+          box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+          margin: 10px; /* Add margin to create space between the elements */
       }
       .jobs_container {
           display: flex;
@@ -55,6 +73,26 @@
           border-radius: 10px;
           box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
           flex-basis: 75%;
+      }
+      .cl_proofread_container {
+          display: flex;
+          justify-content: space-between;
+      }
+
+      .cl_proofread_left {
+          padding: 20px;
+          background-color: white;
+          border-radius: 10px;
+          box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+          flex-basis: 75%;
+      }
+
+      .cl_proofread_right {
+          padding: 20px;
+          background-color: white;
+          border-radius: 10px;
+          box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+          flex-basis: 24%;
       }
       table {
           border-collapse: collapse;

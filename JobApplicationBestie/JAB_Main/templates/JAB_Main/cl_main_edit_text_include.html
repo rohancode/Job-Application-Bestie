@@ -1,0 +1,12 @@
+{% if edit_mode_text %}
+<form action="" method="POST">
+    {% csrf_token %}
+    {{ form_text.as_p }}
+    <br/>
+    <input type="submit" value="Update" class="btn btn-secondary">
+</form>
+<a href="?edit_mode_text=0">Cancel</a>
+{% else %}
+<p>{{ cl_case.text|linebreaks}}</p>
+<a href="?edit_mode_text=1">Edit</a>
+{% endif %}

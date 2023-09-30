@@ -1,0 +1,37 @@
+{% if edit_mode_proofread_main %}
+<form action="" method="POST">
+    {% csrf_token %}
+    {{ form_main.as_p }}
+    <br/>
+    <input type="submit" value="Update" class="btn btn-secondary">
+</form>
+<a href="?edit_mode_proofread_main=0">Cancel</a>
+{% else %}
+<p>
+    <b>Your Full Name:</b><br/>
+    {{ cl_case.main_self_name }}
+</p>
+<p>
+    <b>Your Address:</b><br/>
+    {{ cl_case.main_self_address }}
+</p>
+<p>
+    <b>Cover Letter Subject:</b><br/>
+    {{ cl_case.main_subject }}
+</p>
+<a href="?edit_mode_proofread_main=1">Edit</a>
+{% endif %}
+<br/>
+<br/>
+<p>
+    <b>Company Name:</b><br/>
+    {{ job_case.company }}
+</p>
+<p>
+    <b>Company Address:</b><br/>
+    {{ job_case.address }}
+</p>
+<p>
+    <b>Apply Date:</b><br/>
+    {{ job_case.date_apply }}
+</p>

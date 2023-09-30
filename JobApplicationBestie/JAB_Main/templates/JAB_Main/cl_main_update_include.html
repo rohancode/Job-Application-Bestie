@@ -1,0 +1,39 @@
+{% if edit_mode_update %}
+<form action="" method="POST">
+    {% csrf_token %}
+    {{ form_update.as_p }}
+    <br/>
+    <input type="submit" value="Update" class="btn btn-secondary">
+</form>
+<a href="?edit_mode_update=0">Cancel</a>
+{% else %}
+<p>
+    <b>Self Introduction:</b><br/>
+    {{ cl_case.questionnaire_self_introduction }}
+</p>
+<p>
+    <b>What are needs of the project?:</b><br/>
+    {{ cl_case.questionnaire_looking_for }}
+</p>
+<p>
+    <b>Write relevant experience:</b><br/>
+    {{ cl_case.questionnaire_relevant_experience }}
+</p>
+<p>
+    <b>Links for relevant experience (If, any):</b><br/>
+    {{ cl_case.questionnaire_relevant_work_links }}
+</p>
+<p>
+    <b>How the relevant experience connects the needs?:</b><br/>
+    {{ cl_case.questionnaire_how_solve }}
+</p>
+<p>
+    <b>Write about your strengths and personality:</b><br/>
+    {{ cl_case.questionnaire_personality_strengths }}
+</p>
+<p>
+    <b>Any portfolio links?:</b><br/>
+    {{ cl_case.questionnaire_portfolio_links }}
+</p>
+<a href="?edit_mode_update=1">Edit</a>
+{% endif %}

@@ -1,0 +1,37 @@
+{% extends 'JAB_Main/base.html' %}
+
+{% block content %}
+    <div class="cl_proofread_container">
+        <p>Navigation: <a href="{% url 'jobs' %}">Jobs</a> &gt; <a href="{% url 'cl_main' job_case.id %}"> Cover Letter ({{ job_case.company }} / {{ job_case.position }})</a> &gt; <a href="{% url 'cl_proofread' cl_case.id  %}"> Proofread</a> &gt;</p>
+    </div>
+    <div class="cl_proofread_container">
+        <div class="cl_proofread_left">
+            <h4>Proofread</h4>
+            <div>
+                <br/>
+                {% include 'JAB_Main/cl_proofread_main_include.html' %}
+            </div>
+            <div>
+                <a href="{% url 'cl_download' cl_case.id  %}">Download Cover Letter</a> 
+            </div>
+        </div>
+        <div class="cl_proofread_right">
+            <h4>Checklist</h4>
+            <ul>
+                <li>Keywords Included</li>
+                <li>Brief Self Introuction</li>
+                <li>Motivation Showed</li>
+                <li>Limited Techical Jargon</li>   
+                <li>No Template Generic Content</li>
+                <li>No ChatGPT Generic Content</li>
+                <li>Subject Added</li>
+                <li>Address Added</li>
+                <li>No Madeup Experience</li>
+                <li>Availability Stated</li>
+                <li>Proper Salutation</li>   
+            </ul>   
+        </div>
+    </div>
+    
+
+{% endblock %}

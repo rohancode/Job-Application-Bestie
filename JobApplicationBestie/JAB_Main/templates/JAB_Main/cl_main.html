@@ -1,0 +1,48 @@
+{% extends 'JAB_Main/base.html' %}
+
+{% block content %}
+    <div class="cl_main_container">
+        <p>Navigation: <a href="{% url 'jobs' %}">Jobs</a> &gt; <a href="{% url 'cl_main' job_case.id %}"> Cover Letter ({{ job_case.company }} / {{ job_case.position }})</a> &gt;</p>
+    </div>
+    <div class="cl_main_container">
+        <div class="cl_main_full">
+            <b>Company:</b> {{ job_case.company }}
+            <br/>
+            <b>Position:</b> {{ job_case.position }}
+            <br/>
+            <br/>
+            <b>Description:</b> <br/>
+            {{ job_case.description }}
+            <br/>
+            <br/>
+        </div>
+    </div>
+    <br/>
+    <div>
+        <a href="{% url 'cl_proofread' cl_case.id  %}">Proofread</a> 
+    </div>
+    <br/>
+    <div class="cl_main_container">
+        <div class="cl_main_left">
+            <div class="cl_main_top">
+                <h4>Cover Letter Questionnaire</h4>
+                <div>
+                    <br/>
+                    {% include 'JAB_Main/cl_main_update_include.html' %}
+                </div>
+            </div>
+            <div class="cl_main_bottom">
+                <h4>Cover Letter Text</h4>
+                <div>
+                    <br/>
+                    {% include 'JAB_Main/cl_main_edit_text_include.html' %}
+                </div>
+                
+            </div>
+        </div>
+        <div class="cl_main_right">
+            <h4>References</h4>
+        </div>
+    </div>
+
+{% endblock %}
