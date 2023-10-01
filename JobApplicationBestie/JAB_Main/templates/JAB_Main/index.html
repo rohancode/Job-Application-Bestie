@@ -16,7 +16,7 @@
 							</div>
 						</div>
                         <div class="gif-container">
-                            <img src="https://media.giphy.com/media/hv0QNfaCiiXSj4bwgK/giphy.gif" alt="Temp Gif" class="gif-image" style="max-width: 100%;" />
+                            <img class="navbar-brand" src="{% static 'images/saas-logo.svg' %}" alt="Logo" style="max-width: 100%;"/>
 						</div>
                     </div>
                 </div>
@@ -25,7 +25,7 @@
 
         {% include 'JAB_Main/index/index_footer.html' %}
     </div>
-
+    {% include 'JAB_Main/cookie_banner.html' %}
     {% include 'JAB_Main/index/index_bottom_scripts.html' %}
 </body>
 {% include 'JAB_Main/utils/html_exit.html' %}

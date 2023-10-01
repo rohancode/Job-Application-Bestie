@@ -77,3 +77,8 @@ class Source(models.Model):
 
     def __str__(self):
         return self.name
+
+class UserConsent(models.Model):
+    user_ip = models.GenericIPAddressField()
+    timestamp = models.DateTimeField(auto_now_add=True)
+    essential_cookies = models.BooleanField(default=False)

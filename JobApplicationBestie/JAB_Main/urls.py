@@ -17,6 +17,11 @@ urlpatterns = [
     path('source/add', views.source_add, name='source_add'),
     path('source/<source_id>/edit', views.source_update, name='source_update'),
     path('source/<source_id>/delete', views.source_delete, name='source_delete'),
+
+    path('accept_cookies', views.accept_cookies, name='accept_cookies'),
+    path('privacy_policy', views.privacy_policy, name='privacy_policy'),
+    path('terms_conditions', views.terms_conditions, name='terms_conditions'),
+    path('data_security', views.data_security, name='data_security'),
     
     path('ui_dev_index_footer', views.ui_dev_index_footer, name='ui_dev_index_footer'),
     

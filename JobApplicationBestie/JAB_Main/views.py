@@ -4,8 +4,8 @@ from django.shortcuts import render, redirect, reverse
 from django.contrib.auth.decorators import login_required
 from django.http import HttpResponse, FileResponse
 from .forms import JobForm, CLForm, CLForm_Text, CLForm_Main, SourceForm
-from django.http import HttpResponseRedirect
-from .models import Job, CoverLetter, Source
+from django.http import HttpResponseRedirect, JsonResponse
+from .models import Job, CoverLetter, Source, UserConsent
 from django.core.paginator import Paginator
 
 from reportlab.pdfgen import canvas
@@ -21,6 +21,28 @@ def home(request):
         return HttpResponseRedirect(reverse('jobs'))
     else:
         return render(request, 'JAB_Main/index.html', {})
+
+def privacy_policy(request):
+    return render(request, 'JAB_Main/privacy_policy.html', {})
+        
+def terms_conditions(request):
+    return render(request, 'JAB_Main/terms_conditions.html', {})
+
+def data_security(request):
+    return render(request, 'JAB_Main/data_security.html', {})
+
+def accept_cookies(request):
+    if request.method == 'POST':
+        user_ip = request.META.get('REMOTE_ADDR')
+        essential = request.POST.get('essential_cookies', False)
+        consent = UserConsent(
+            user_ip=user_ip,
+            essential_cookies=essential
+        )
+        consent.save()
+        return JsonResponse({'message': 'Consent recorded successfully.'})
+    else:
+        return JsonResponse({'message': 'Invalid request method.'}, status=400)
 
 @login_required
 def job_add(request):

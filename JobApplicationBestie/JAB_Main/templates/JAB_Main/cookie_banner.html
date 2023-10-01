@@ -1,0 +1,58 @@
+<div id="cookie-banner" class="cookie-banner">
+    <p>This website uses essential cookies to ensure the proper functioning of the site. <a href="{% url 'privacy_policy' %}">Learn More</a></p>
+    <button id="accept-cookies" class="accept-cookies">Accept</button>
+</div>
+
+<script>
+    function getCookie(name) {
+        let cookieValue = null;
+        if (document.cookie && document.cookie !== '') {
+            const cookies = document.cookie.split(';');
+            for (let i = 0; i < cookies.length; i++) {
+                const cookie = cookies[i].trim();
+                if (cookie.substring(0, name.length + 1) === (name + '=')) {
+                    cookieValue = decodeURIComponent(cookie.substring(name.length + 1));
+                    break;
+                }
+            }
+        }
+        return cookieValue;
+    }
+    function recordConsent(status) {
+        const csrftoken = getCookie('csrftoken');
+        // Make an AJAX POST request to your Django view
+        const xhr = new XMLHttpRequest();
+        xhr.open('POST', 'accept_cookies', true);
+        xhr.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded; charset=UTF-8');
+        xhr.setRequestHeader('X-CSRFToken', csrftoken);
+        xhr.onreadystatechange = function () {
+            if (xhr.readyState === 4 && xhr.status === 200) {
+                // Success - Consent has been recorded in the database
+                console.log('Consent recorded successfully.');
+            }
+        };
+        const data = `status=${status}`;  // Send the status (true or false) to the view
+        xhr.send(data);
+    }
+
+    document.addEventListener("DOMContentLoaded", function () {
+        const cookieBanner = document.getElementById("cookie-banner");
+        const acceptCookiesButton = document.getElementById("accept-cookies");
+
+        acceptCookiesButton.addEventListener("click", function () {
+            // Set a cookie to remember user's choice
+            document.cookie = "cookies_accepted=true; expires=Thu, 01 Jan 2030 00:00:00 UTC; path=/";
+
+            // Record consent in the database via an AJAX request
+            recordConsent(true);
+
+            // Hide the cookie banner
+            cookieBanner.style.display = "none";
+        });
+
+        // Check if the user has previously accepted cookies
+        if (document.cookie.indexOf("cookies_accepted=true") === -1) {
+            cookieBanner.style.display = "block";
+        }
+    });
+</script>
