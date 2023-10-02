@@ -19,7 +19,7 @@ from pathlib import Path
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent.parent
-ENV_FILE_PATH = BASE_DIR.joinpath('.env')
+ENV_FILE_PATH = BASE_DIR.joinpath('.env_dev')
 
 load_dotenv(ENV_FILE_PATH)
 allowed_host=os.getenv("allowed_host")
