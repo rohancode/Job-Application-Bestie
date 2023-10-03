@@ -8,46 +8,42 @@
         <div class="jobs_left">
             <h4>Daily Sources</h4>
             <a href="{% url 'source_add' %}">Add Source</a> 
+            <br/>
+            <br/>
             <ul>
                 {% for source in sources_base %}
                     <li><a href="{{ source }}">{{ source }}></a></li>
+                    <br/>
                 {% endfor %}
                 {% for source in sources_user %}
                     <li>
                         <a href="{{ source.link }}">{{ source.link }}</a>
                         <a href="{% url 'source_update' source.id %}">Edit</a> 
-                        <a href="{% url 'source_delete' source.id  %}">Permanent Delete Source</a> 
+                        <a href="{% url 'source_delete' source.id  %}">Delete</a> 
                     </li>
+                    <br/>
                 {% endfor %}
             </ul>
         </div>
         <div class="jobs_right">
             <h4>Jobs</h4>
             <a href="{% url 'job_add' %}">Add Job</a>
+            <br/>
+            <br/>
             <table>
                 <thead>
                     <tr>
-                        <th>Actions</th>
                         <th>Company</th>
                         <th>Position</th>
                         <th>URL</th>
                         <th>Cover Letter</th>
                         <th>Resume (Coming Soon)</th>
-                        <th>Date Posted</th>
-                        <th>Eligibility Confirm</th>
-                        <th>Priority</th>
-                        <th>Acceptance Chance</th>
-                        <th>Documents Preptime Estimate</th>
-                        <th>Application Sent</th>
+                        <th>Job Actions</th>
                     </tr>
                 </thead>
                 <tbody>
                     {% for job in job_all %}
                     <tr>
-                        <td>
-                            <a href="{% url 'job_update' job.id %}">Edit</a> 
-                            <a href="{% url 'job_delete' job.id %}">Permanent Delete Job</a>
-                        </td>
                         <td>{{ job.company }}</td>
                         <td>{{ job.position }}</td>
                         <td>
@@ -57,18 +53,17 @@
                             <a href="{% url 'cl_main' job.id %}">Cover Letter Builder</a> 
                         </td>
                         <td>
-                            <a href="">Resume Builder</a>
+                            Resume Builder
                         </td>
-                        <td>{{ job.date_posted }}</td>
-                        <td>{{ job.eligible_pre_check_good_idea }}</td>
-                        <td>{{ job.priority }}</td>
-                        <td>{{ job.acceptance_chance_feeling }}</td>
-                        <td>{{ job.documents_prep_time_feeling }}</td>
-                        <td>{{ job.application_sent_done }}</td>
+                        <td>
+                            <a href="{% url 'job_update' job.id %}">Edit</a> 
+                            <a href="{% url 'job_delete' job.id %}">Delete</a>
+                        </td>
                     </tr>
                     {% endfor %}
                 </tbody>
-            </table>  
+            </table> 
+            <br/> 
             {% if job_all.has_previous %}
                 <a href="?page=1">&laquo First</a>
                 <a href="?page={{ job_all.previous_page_number }}">Previous</a>

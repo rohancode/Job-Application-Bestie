@@ -1,0 +1,16 @@
+{% extends 'JAB_Main/base.html' %}
+
+{% block content %}
+    <div class="references_main_container">
+        <p>Navigation: <a href="{% url 'references_main' %}">References</a> &gt; <a href="{% url 'project_main' project_case.id %}"> Project ({{ project_case.reference_title }})</a> &gt;</p>
+    </div>
+    <div class="cl_main_container">
+        <div class="references_main_full">
+            <h4>{{ project_case.reference_title }}</h4>
+            <div>
+                <br/>
+                {% include 'JAB_Main/project_main_project_include.html' %}
+            </div>
+        </div>
+    </div>
+{% endblock %}

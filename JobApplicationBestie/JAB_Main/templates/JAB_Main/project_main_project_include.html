@@ -1,0 +1,67 @@
+{% if edit_mode_project %}
+<form action="" method="POST">
+    {% csrf_token %}
+    {{ form_project.as_p }}
+    <br/>
+    <input type="submit" value="Update" class="btn btn-secondary">
+</form>
+<a href="?edit_mode_project=0">Cancel</a>
+{% else %}
+<p>
+    <b>About:</b><br/>
+    {{ project_case.reference_about }}
+</p>
+<p>
+    <b>Date:</b><br/>
+    {{ project_case.reference_date }}
+</p>
+<p>
+    <b>Company:</b><br/>
+    {{ project_case.reference_company }}
+</p>
+<p>
+    <b>Description:</b><br/>
+    {{ project_case.reference_description }}
+</p>
+<p>
+    <b>Problem Statement:</b><br/>
+    {{ project_case.reference_problem_statement }}
+</p>
+<p>
+    <b>Stakeholders:</b><br/>
+    {{ project_case.reference_to_whom_solve }}
+</p>
+<p>
+    <b>Bottleneck Solved:</b><br/>
+    {{ project_case.reference_bottleneck_solve }}
+</p>
+<p>
+    <b>Time Taken:</b><br/>
+    {{ project_case.reference_time_taken }}
+</p>
+<p>
+    <b>Solution:</b><br/>
+    {{ project_case.reference_solution }}
+</p>
+<p>
+    <b>Results:</b><br/>
+    {{ project_case.reference_results }}
+</p>
+<p>
+    <b>Testimonials:</b><br/>
+    {{ project_case.reference_testimonials }}
+</p>
+<p>
+    <b>Visuals:</b><br/>
+    {{ project_case.reference_visuals }}
+</p>
+<p>
+    <b>Skills:</b><br/>
+    {{ project_case.reference_skills }}
+</p>
+<p>
+    <b>Links:</b><br/>
+    {{ project_case.reference_links }}
+</p>
+<a href="?edit_mode_project=1">Edit</a>
+{% endif %}

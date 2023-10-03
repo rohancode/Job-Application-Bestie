@@ -1,0 +1,19 @@
+{% if edit_mode_proofread_company %}
+<form action="" method="POST">
+    {% csrf_token %}
+    {{ form_proofread_company.as_p }}
+    <br/>
+    <input type="submit" value="Update" class="btn btn-secondary">
+</form>
+<a href="?edit_mode_proofread_company=0">Cancel</a>
+{% else %}
+<p>
+    <b>Company Name:</b><br/>
+    {{ job_case.company }}
+</p>
+<p>
+    <b>Company Address:</b><br/>
+    {{ job_case.address }}
+</p>
+<a href="?edit_mode_proofread_company=1">Edit</a>
+{% endif %}

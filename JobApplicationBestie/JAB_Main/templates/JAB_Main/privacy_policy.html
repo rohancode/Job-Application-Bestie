@@ -1,9 +1,7 @@
+{% extends 'JAB_Main/base_index.html' %}
 {% load static %}
-{% include 'JAB_Main/utils/html_init.html' %}
-{% include 'JAB_Main/index/index_head.html' %}
+{% block content %}
 
-<body>
-    {% include 'JAB_Main/navbar.html' %}
     <div class="cl_main_container">
         <div class="cl_main_full"></div>
             <header>
@@ -29,10 +27,5 @@
                 <p>01-Oct-2023</p>
             </section>
         </div>
-        {% include 'JAB_Main/index/index_footer.html' %}
     </div>
-    {% include 'JAB_Main/index/index_bottom_scripts.html' %}
-</body>
-{% include 'JAB_Main/utils/html_exit.html' %}
-
-
+{% endblock %}

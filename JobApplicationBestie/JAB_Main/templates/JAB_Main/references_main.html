@@ -1,0 +1,39 @@
+{% extends 'JAB_Main/base.html' %}
+
+{% block content %}
+    <div class="jobs_container">
+        <p>Navigation: <a href="{% url 'references_main' %}">References</a> &gt;</p>
+    </div>
+    <div class="references_main_container">
+        <div class="references_main_full">  
+            <h4>Projects</h4>
+            <a href="{% url 'project_add' %}">Add Project</a>
+            <br/>
+            <br/>
+            {% for reference_project_case in reference_project_cases %}
+                <div class="card">
+                    <div class="card-header">
+                        Title: {{ reference_project_case.reference_title }}
+                    </div>
+                    <div class="card-body">
+                        <p class="card-text">
+                            <ul>
+                                <li>Company: {{ reference_project_case.reference_company }}</li>
+                                <li>Problem Statement: {{ reference_project_case.reference_problem_statement }}</li>
+                                <li>Solution: {{ reference_project_case.reference_solution }}</li>
+                                <li>Results: {{ reference_project_case.reference_results }}</li>
+                                <li>Skills: {{ reference_project_case.reference_skills }}</li>
+                                <li>Links: {{ reference_project_case.reference_links }}</li>
+                            </ul>
+                        </p>
+                        <a href="{% url 'project_main' reference_project_case.id %}">Main</a> 
+                        <a href="{% url 'project_update' reference_project_case.id %}">Edit</a> 
+                        <a href="{% url 'project_delete' reference_project_case.id  %}">Delete</a> 
+                    </div>
+                </div>
+            {% endfor %}
+        </div>
+    </div>
+    
+
+{% endblock %}

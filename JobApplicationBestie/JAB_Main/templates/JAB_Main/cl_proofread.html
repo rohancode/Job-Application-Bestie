@@ -4,6 +4,19 @@
     <div class="cl_proofread_container">
         <p>Navigation: <a href="{% url 'jobs' %}">Jobs</a> &gt; <a href="{% url 'cl_main' job_case.id %}"> Cover Letter ({{ job_case.company }} / {{ job_case.position }})</a> &gt; <a href="{% url 'cl_proofread' cl_case.id  %}"> Proofread</a> &gt;</p>
     </div>
+    <div class="cl_main_container">
+        <div class="cl_main_full">
+            <b>Job Description:</b> <br/>
+            {{ job_case.description|linebreaks }}
+            <br/>
+            <br/>
+        </div>
+    </div>
+    <br/>
+    <div>
+        <a href="{% url 'cl_download' cl_case.id  %}">Download Cover Letter</a> 
+    </div>
+    <br/>
     <div class="cl_proofread_container">
         <div class="cl_proofread_left">
             <h4>Proofread</h4>
@@ -12,7 +25,14 @@
                 {% include 'JAB_Main/cl_proofread_main_include.html' %}
             </div>
             <div>
-                <a href="{% url 'cl_download' cl_case.id  %}">Download Cover Letter</a> 
+                <br/>
+                {% include 'JAB_Main/cl_proofread_company_include.html' %}
+            </div>
+            <div>
+                <b>Cover Letter</b><br/>
+                <div>
+                    {% include 'JAB_Main/cl_main_edit_text_include.html' %}
+                </div>
             </div>
         </div>
         <div class="cl_proofread_right">

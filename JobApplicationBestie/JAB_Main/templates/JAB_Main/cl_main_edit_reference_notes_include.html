@@ -1,0 +1,12 @@
+{% if edit_mode_reference_notes %}
+<form action="" method="POST">
+    {% csrf_token %}
+    {{ form_reference_notes.as_p }}
+    <br/>
+    <input type="submit" value="Update" class="btn btn-secondary">
+</form>
+<a href="?edit_mode_reference_notes=0">Cancel</a>
+{% else %}
+<p>{{ job_case.reference_notes|linebreaks}}</p>
+<a href="?edit_mode_reference_notes=1">Edit</a>
+{% endif %}

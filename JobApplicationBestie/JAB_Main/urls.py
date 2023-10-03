@@ -18,6 +18,12 @@ urlpatterns = [
     path('source/<source_id>/edit', views.source_update, name='source_update'),
     path('source/<source_id>/delete', views.source_delete, name='source_delete'),
 
+    path('references', views.references_main, name='references_main'),
+    path('project/add', views.project_add, name='project_add'),
+    path('project/<project_id>/edit', views.project_update, name='project_update'),
+    path('project/<project_id>/delete', views.project_delete, name='project_delete'),
+    path('project/<project_id>', views.project_main, name='project_main'),
+
     path('accept_cookies', views.accept_cookies, name='accept_cookies'),
     path('privacy_policy', views.privacy_policy, name='privacy_policy'),
     path('terms_conditions', views.terms_conditions, name='terms_conditions'),

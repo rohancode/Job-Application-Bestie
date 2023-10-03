@@ -1,9 +1,7 @@
+{% extends 'JAB_Main/base_index.html' %}
 {% load static %}
-{% include 'JAB_Main/utils/html_init.html' %}
-{% include 'JAB_Main/index/index_head.html' %}
+{% block content %}
 
-<body>
-    {% include 'JAB_Main/navbar.html' %}
     <div class="cl_main_container">
         <div class="cl_main_full"></div>
             <header>
@@ -22,18 +20,16 @@
         
                 <h2>4. User Authentication</h2>
                 <p>We use strong authentication mechanisms to ensure that only authorized users can access your data. Passwords are hashed and stored securely, and we encourage users to use strong and unique passwords.</p>
+
+                <h2>5. IT Resource Location</h2>
+                <p>All compute resources, databases and hosting is managed by UK based PythonAnywhere LLP. Read more about them <a href="https://www.pythonanywhere.com/about/company_details/">here</a> .</p>
         
                 <h2>5. Reporting Security Issues</h2>
                 <p>If you discover any security vulnerabilities or have concerns about the security of your data, please report them to us immediately at: rohan.rathore93@gmail.com</p>
             
                 <h2>6. Last Updated</h2>
-                <p>01-Oct-2023</p>
+                <p>02-Oct-2023</p>
             </section>
         </div>
-        {% include 'JAB_Main/index/index_footer.html' %}
     </div>
-    {% include 'JAB_Main/index/index_bottom_scripts.html' %}
-</body>
-{% include 'JAB_Main/utils/html_exit.html' %}
-
-
+{% endblock %}
