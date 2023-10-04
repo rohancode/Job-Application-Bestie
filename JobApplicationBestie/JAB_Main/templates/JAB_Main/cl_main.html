@@ -18,10 +18,6 @@
         </div>
     </div>
     <br/>
-    <div>
-        <a href="{% url 'cl_proofread' cl_case.id  %}">Proofread</a> 
-    </div>
-    <br/>
     <div class="cl_main_container">
         <div class="cl_main_left">
             <div class="cl_main_top">
@@ -37,6 +33,10 @@
                     <br/>
                     {% include 'JAB_Main/cl_main_edit_text_include.html' %}
                 </div>
+            </div>
+            <br/>
+            <div>
+                <a href="{% url 'cl_proofread' cl_case.id  %}">Proofread Cover Letter</a> 
             </div>
         </div>
         <div class="cl_main_right">
@@ -81,6 +81,7 @@
                     </div>
                 </div>
             </div>
+            
             <div class="cl_main_reference_bottom">
                 <h4>Notes</h4>
                 <div>

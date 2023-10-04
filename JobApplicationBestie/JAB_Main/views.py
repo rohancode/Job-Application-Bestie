@@ -1,5 +1,6 @@
 import io
 import json
+from pathlib import Path
 
 from django.shortcuts import render, redirect, reverse
 from django.contrib.auth.decorators import login_required
@@ -211,6 +212,8 @@ def cl_proofread(request, cl_id):
 @login_required
 def cl_download(request, cl_id):
     
+    BASE_DIR = Path(__file__).resolve().parent.parent.parent
+
     def split_long_string(data, max_width):
         words = data.split()
         lines = []
@@ -230,8 +233,8 @@ def cl_download(request, cl_id):
     current_user = request.user
     cl_case = CoverLetter.objects.get(pk=cl_id, user=current_user) 
     job_case = cl_case.job
-    pdfmetrics.registerFont(TTFont('TNR', 'JobApplicationBestie/JAB_Main/fonts/times.ttf'))
-    pdfmetrics.registerFont(TTFont('TNRB', 'JobApplicationBestie/JAB_Main/fonts/timesbd.ttf'))
+    pdfmetrics.registerFont(TTFont('TNR', BASE_DIR.joinpath('JobApplicationBestie/JAB_Main/fonts/times.ttf')))
+    pdfmetrics.registerFont(TTFont('TNRB', BASE_DIR.joinpath('JobApplicationBestie/JAB_Main/fonts/timesbd.ttf')))
 
 
     buf = io.BytesIO()

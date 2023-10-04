@@ -13,10 +13,7 @@
         </div>
     </div>
     <br/>
-    <div>
-        <a href="{% url 'cl_download' cl_case.id  %}">Download Cover Letter</a> 
-    </div>
-    <br/>
+    
     <div class="cl_proofread_container">
         <div class="cl_proofread_left">
             <h4>Proofread</h4>
@@ -34,6 +31,11 @@
                     {% include 'JAB_Main/cl_main_edit_text_include.html' %}
                 </div>
             </div>
+            <br/>
+            <div>
+                <a href="{% url 'cl_download' cl_case.id  %}">Download Cover Letter</a> 
+            </div>
+            <br/>
         </div>
         <div class="cl_proofread_right">
             <h4>Checklist</h4>
