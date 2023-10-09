@@ -33,6 +33,7 @@
             <table>
                 <thead>
                     <tr>
+                        <th>Added</th>
                         <th>Company</th>
                         <th>Position</th>
                         <th>URL</th>
@@ -44,6 +45,7 @@
                 <tbody>
                     {% for job in job_all %}
                     <tr>
+                        <td>{{ job.date_add }}</td>
                         <td>{{ job.company }}</td>
                         <td>{{ job.position }}</td>
                         <td>

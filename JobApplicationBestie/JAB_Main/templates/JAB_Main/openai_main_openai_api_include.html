@@ -1,0 +1,15 @@
+{% if edit_mode_openai_api %}
+<form action="" method="POST">
+    {% csrf_token %}
+    {{ form_openai_api.as_p }}
+    <br/>
+    <input type="submit" value="Update" class="btn btn-secondary">
+</form>
+<a href="?edit_mode_openai_api=0">Cancel</a>
+{% else %}
+<p>
+    <b>Current API Key:</b><br/>
+    {{ member.openai_api }}
+</p>
+<a href="?edit_mode_openai_api=1">Edit</a>
+{% endif %}

@@ -1,6 +1,6 @@
 from django import forms
 from django.forms import ModelForm
-from .models import Job, CoverLetter, Source, ReferenceProject
+from .models import Job, CoverLetter, Source, ReferenceProject, Member
 
 class JobForm(ModelForm):
     class Meta:
@@ -59,3 +59,8 @@ class ReferenceProjectForm(ModelForm):
         widgets = {
             'reference_date': forms.DateInput(attrs={'type': 'date'}),
         }
+
+class Member_OpenaiAPI(ModelForm):
+    class Meta:
+        model = Member
+        fields = ('openai_api',)

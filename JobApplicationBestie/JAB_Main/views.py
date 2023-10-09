@@ -6,10 +6,11 @@ from django.shortcuts import render, redirect, reverse
 from django.contrib.auth.decorators import login_required
 from django.http import HttpResponse, FileResponse
 from .forms import JobForm, CLForm, CLForm_Text, CLForm_Main, SourceForm, JobForm_ReferenceNotes, JobCaseSelectionForm, JobForm_Company, ReferenceProjectForm
+from .forms import Member_OpenaiAPI
 from django.http import HttpResponseRedirect, JsonResponse
-from .models import Job, CoverLetter, Source, UserConsent, ReferenceProject
+from .models import Job, CoverLetter, Source, UserConsent, ReferenceProject, Member
+from django.contrib.auth.models import User
 from django.core.paginator import Paginator
-
 
 from reportlab.pdfgen import canvas
 from reportlab.lib.units import inch
@@ -17,9 +18,25 @@ from reportlab.lib.pagesizes import letter
 from reportlab.pdfbase import pdfmetrics
 from reportlab.pdfbase.ttfonts import TTFont
 
+import openai
+from retrying import retry
 
 
 
+@login_required
+def temp(request):
+    if request.user.is_authenticated:
+        if request.user.is_superuser:
+            users = User.objects.all()
+            for user in users:
+                member = Member(user=user)
+                member.save()
+            return redirect('jobs')
+        else:
+            pass
+    else:
+        pass
+    return redirect('jobs')
 
 def home(request):
     if request.user.is_authenticated:
@@ -116,6 +133,7 @@ def job_delete(request, job_id):
 @login_required
 def cl_main(request, job_id):
     current_user = request.user
+    member = Member.objects.get(user=current_user)
     job_case = Job.objects.get(pk=job_id, user=current_user)
     cl_case = job_case.cover_letters_job
     reference_project_cases = ReferenceProject.objects.filter(user=current_user).order_by('-id')
@@ -173,7 +191,8 @@ def cl_main(request, job_id):
         'edit_mode_reference_notes':edit_mode_reference_notes,
         'form_job_case':form_job_case,
         'selected_job_case': selected_job_case,
-        'reference_project_cases': reference_project_cases
+        'reference_project_cases': reference_project_cases,
+        'member':member,
     })
 
 @login_required
@@ -423,4 +442,132 @@ def project_main(request, project_id):
         'project_case':project_case,
         'form_project': form_project,
         'edit_mode_project': edit_mode_project,
+    })
+
+@login_required
+def openai_main(request):
+    current_user = request.user
+    member = Member.objects.get(user=current_user)
+
+    edit_mode_openai_api = request.GET.get('edit_mode_openai_api', '0') == '1'
+    if request.method == "POST" and edit_mode_openai_api:
+        form_openai_api = Member_OpenaiAPI(request.POST, instance=member)
+        if form_openai_api.is_valid() and request.GET.get('edit_mode_openai_api', '0') == '1':
+            form_openai_api.save()
+            return redirect('openai_main')
+    else:
+        form_openai_api = Member_OpenaiAPI(instance=member)
+
+    return render(request, 'JAB_Main/openai_main.html', {
+        'member':member,
+        'current_user': current_user,
+        'form_openai_api': form_openai_api,
+        'edit_mode_openai_api': edit_mode_openai_api,
+    })
+
+@login_required
+def openai_api_test(request):
+    current_user = request.user
+    member = Member.objects.get(user=current_user)
+    openai.api_key = member.openai_api
+
+    def prompt_test():
+        prompt = f"""
+            Write the values in a dictionary with the key as "test" and value as "ok".
+            """
+        return prompt
+    
+    prompt = prompt_test()
+    
+    def my_custom_retry_decorator():
+        return retry(wait_fixed=1000, stop_max_delay=10000)
+
+    @my_custom_retry_decorator()
+    def get_completion(prompt, model="gpt-3.5-turbo"):
+        messages = [{"role": "user", "content": prompt}]
+        response = openai.ChatCompletion.create(
+        model=model,
+        messages=messages,
+        temperature=0,
+        request_timeout=50,
+        )
+        return response.choices[0].message["content"]
+
+    try:
+        response = get_completion(prompt)
+        my_dict = json.loads(response)
+        final_resp = my_dict['test']
+    except:
+        final_resp = "not_ok"
+
+    if final_resp == "ok":
+        member.openai_enable = True
+        member.save()
+    return redirect('openai_main')
+
+@login_required
+def openai_api_delete(request):
+    current_user = request.user
+    member = Member.objects.get(user=current_user)
+    member.openai_enable = False
+    member.openai_api = ''
+    member.save()
+    return redirect('openai_main')
+
+@login_required
+def openai_cover_letter(request, job_id):
+    current_user = request.user
+    member = Member.objects.get(user=current_user)
+    job_case = Job.objects.get(pk=job_id, user=current_user)
+    cl_case = job_case.cover_letters_job
+    openai.api_key = member.openai_api
+
+    def prompt_template(input_text='input_text'):
+        prompt = f"""
+            Make a cover letter main body content from the following points for a job proposal. It should not include any other information that the provided information below. It should be as short as possible.
+            ```
+            The needs of the project:
+            > {cl_case.questionnaire_looking_for}
+
+            My relevant experience:
+            > {cl_case.questionnaire_relevant_experience}
+
+            Links of my relevant experience (if, any):
+            > {cl_case.questionnaire_relevant_work_links}
+
+            How my relevant experience connects to the needs of the project:
+            > {cl_case.questionnaire_how_solve}
+
+            My porforlio links (if, any):
+            > {cl_case.questionnaire_portfolio_links}
+
+            ```
+            """
+        return prompt
+    prompt = prompt_template('.')
+
+    def my_custom_retry_decorator():
+        return retry(wait_fixed=1000, stop_max_delay=10000)
+
+    @my_custom_retry_decorator()
+    def get_completion(prompt, model="gpt-3.5-turbo"):
+        messages = [{"role": "user", "content": prompt}]
+        response = openai.ChatCompletion.create(
+        model=model,
+        messages=messages,
+        temperature=0,
+        request_timeout=50,
+        )
+        return response.choices[0].message["content"]
+
+    try:
+        response = get_completion(prompt)
+        # response = "test"
+    except:
+        response = "chatgpt_error"
+    
+    return render(request, 'JAB_Main/openai_cover_letter.html', {
+        'response': response,
+        'job_case': job_case,
+        'cl_case': cl_case
     })

@@ -1,0 +1,24 @@
+{% extends 'JAB_Main/base.html' %}
+
+{% block content %}
+    <div class="openai_cover_letter_container">
+        <p>Navigation: <a href="{% url 'jobs' %}">Jobs</a> &gt; <a href="{% url 'cl_main' job_case.id %}"> Cover Letter ({{ job_case.company }} / {{ job_case.position }})</a> &gt; ChatGPT Cover Letter &gt;</p>
+    </div>
+    <div class="openai_cover_letter_container">
+        <div class="openai_cover_letter_left">
+            <b>What are needs of the project?:</b> <br/>{{ cl_case.questionnaire_looking_for|linebreaks }}
+            <br/>
+            <b>Write relevant experience::</b> <br/>{{ cl_case.questionnaire_relevant_experience|linebreaks }}
+            <br/>
+            <b>Links for relevant experience (If, any):</b> <br/>{{ cl_case.questionnaire_relevant_work_links|linebreaks }}
+            <br/>
+            <b>How the relevant experience connects the needs?:</b> <br/>{{ cl_case.questionnaire_how_solve|linebreaks }}
+            <br/>
+            <b>Any portfolio links?:</b> <br/>{{ cl_case.questionnaire_portfolio_links|linebreaks }}
+        </div>
+        <div class="openai_cover_letter_right">
+            <b>ChatGPT Cover Letter:</b> <br/>{{ response|linebreaks }}
+        </div>
+    </div>
+
+{% endblock %}

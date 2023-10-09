@@ -28,7 +28,13 @@ urlpatterns = [
     path('privacy_policy', views.privacy_policy, name='privacy_policy'),
     path('terms_conditions', views.terms_conditions, name='terms_conditions'),
     path('data_security', views.data_security, name='data_security'),
+
+    path('chatgpt', views.openai_main, name='openai_main'),
+    path('openai_api_test', views.openai_api_test, name='openai_api_test'),
+    path('openai_api_delete', views.openai_api_delete, name='openai_api_delete'),
+    path('openai_cover_letter/<job_id>', views.openai_cover_letter, name='openai_cover_letter'),
     
+    path('temp', views.temp, name='temp'),
     path('ui_dev_index_footer', views.ui_dev_index_footer, name='ui_dev_index_footer'),
     
 

@@ -17,7 +17,6 @@
             <br/>
         </div>
     </div>
-    <br/>
     <div class="cl_main_container">
         <div class="cl_main_left">
             <div class="cl_main_top">
@@ -91,5 +90,17 @@
             </div>
         </div>
     </div>
+    <div class="cl_main_container">
+        <div class="cl_main_full">
+            <h4>ChatGPT Assitance</h4>
+            {% if member.openai_enable %}
+                <p><a href="{% url 'openai_cover_letter' job_case.id %}">ChatGPT Cover Letter</a> (Open in a new tab, this could take 15 sec approx.)!</p>
+            {% else %}
+                <p><a href="{% url 'openai_main' %}">Set API Key in ChatGPT-Settings</a></p>
+            {% endif %}
+        </div>
+    </div>
+    
+    
 
 {% endblock %}

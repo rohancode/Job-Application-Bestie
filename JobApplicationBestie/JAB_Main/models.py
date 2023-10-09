@@ -4,8 +4,9 @@ from django.utils import timezone
 
 
 class Member(models.Model):
-    user = models.OneToOneField(User, on_delete=models.CASCADE, null=True)
-    
+    openai_api = models.CharField(default='', max_length=255, null=True, blank=True)
+    user = models.OneToOneField(User, on_delete=models.CASCADE, related_name='member_user', null=True)
+    openai_enable = models.BooleanField(default=False, null=True, blank=True)
     def __str__(self):
         return self.user.username
 

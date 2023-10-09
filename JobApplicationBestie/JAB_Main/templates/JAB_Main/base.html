@@ -28,9 +28,41 @@
           background-color: white;
           border-radius: 10px;
           box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-          flex-basis: 100%;
+          flex-basis: 97.5%;
           height: 500px;
           overflow-y: auto;
+      }
+      .openai_cover_letter_container {
+          display: flex;
+          flex-wrap: wrap;
+      }
+
+      .openai_cover_letter_left {
+          padding: 20px;
+          background-color: white;
+          border-radius: 10px;
+          box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+          flex-basis: 48%;
+          overflow-y: auto;
+          height: 500px;
+          margin: 10px;
+      }
+
+      .openai_cover_letter_right {
+          padding: 20px;
+          background-color: white;
+          border-radius: 10px;
+          box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+          flex-basis: 48%;
+          overflow-y: auto;
+          height: 500px;
+          margin: 10px;
+      }
+      @media (max-width: 768px) {
+          .openai_cover_letter_left,
+          .openai_cover_letter_right {
+              flex: 0 0 calc(100% - 20px);
+          }
       }
 
       .cl_main_container {
@@ -43,7 +75,7 @@
           background-color: white;
           border-radius: 10px;
           box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-          flex-basis: 100%;
+          flex-basis: 97.5%;
           height: 200px;
           overflow-y: auto;
           margin: 10px;

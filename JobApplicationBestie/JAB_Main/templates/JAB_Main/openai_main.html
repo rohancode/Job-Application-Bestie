@@ -1,0 +1,33 @@
+{% extends 'JAB_Main/base.html' %}
+
+{% block content %}
+    <div class="references_main_container">
+        <p>Navigation: <a href="{% url 'openai_main' %}">ChatGPT</a> &gt;</p>
+    </div>
+    <div class="cl_main_container">
+        <div class="references_main_full">
+            <h4>ChatGPT Settings for <b>{{ current_user.username }}</b></h4>
+            <div>
+                <br/>
+                {% include 'JAB_Main/openai_main_openai_api_include.html' %}
+            </div>
+            <div>
+                <br/>
+                {% if member.openai_enable %}
+                    <p>API is working fine!</p>
+                {% else %}
+                    <p>API is not saved, tested, incorrect or unfunded!</p>
+                    <p>You can find your API key at https://platform.openai.com/account/api-keys.</p>
+                    <b><p>We do not get any money when adding credits in your openai account!</b></p>
+                {% endif %}
+            </div>
+            <div>
+                {% if member.openai_enable %}
+                <p><a href="{% url 'openai_api_delete' %}">Delete API</a></p>
+                {% else %}
+                    <p><a href="{% url 'openai_api_test' %}">Test & Save</a></p>
+                {% endif %}
+            </div>
+        </div>
+    </div>
+{% endblock %}
