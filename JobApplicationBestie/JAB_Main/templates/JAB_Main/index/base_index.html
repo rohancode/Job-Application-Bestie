@@ -1,0 +1,355 @@
+{% load static %}
+
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="utf-8">
+  <meta content="width=device-width, initial-scale=1.0" name="viewport">
+
+  <title>Job Application Bestie</title>
+  <meta content="" name="description">
+  <meta content="" name="keywords">
+
+  <!-- Favicons -->
+  <!-- <link href="{% static 'assets/img/favicon.png' %}" rel="icon"> -->
+
+  <!-- Google Fonts -->
+  <link href="https://fonts.googleapis.com/css?family=Open+Sans:300,300i,400,400i,600,600i,700,700i|Raleway:300,300i,400,400i,500,500i,600,600i,700,700i|Poppins:300,300i,400,400i,500,500i,600,600i,700,700i" rel="stylesheet">
+
+  <!-- Vendor CSS Files -->
+  <link href="{% static 'assets/vendor/aos/aos.css' %}" rel="stylesheet">
+  <link href="{% static 'assets/vendor/bootstrap/css/bootstrap.min.css' %}" rel="stylesheet">
+  <link href="{% static 'assets/vendor/bootstrap-icons/bootstrap-icons.css' %}" rel="stylesheet">
+  <link href="{% static 'assets/vendor/boxicons/css/boxicons.min.css' %}" rel="stylesheet">
+  <link href="{% static 'assets/vendor/glightbox/css/glightbox.min.css' %}" rel="stylesheet">
+  <link href="{% static 'assets/vendor/remixicon/remixicon.css' %}" rel="stylesheet">
+  <link href="{% static 'assets/vendor/swiper/swiper-bundle.min.css' %}" rel="stylesheet">
+
+  <!-- Template Main CSS File -->
+  <link href="{% static 'assets/css/style.css' %}" rel="stylesheet">
+
+  <style>
+      .main-background {
+          background-image: url("{% static 'images/cta-illustration-dark.svg' %}");
+          background-size: cover;
+          background-position: center;
+          background-repeat: no-repeat;
+      }
+      .site-footer.has-top-divider {
+          background-color: black;
+          color: white;
+      }
+      .site-footer-inner a {
+          color: white;
+          text-decoration: none;
+      }
+      .cookie-banner {
+          position: fixed;
+          bottom: 0;
+          left: 0;
+          right: 0;
+          background-color: #333;
+          color: #fff;
+          padding: 10px;
+          text-align: center;
+          z-index: 9999;
+      }
+      .accept-cookies {
+          background-color: #4CAF50;
+          color: #fff;
+          border: none;
+          padding: 10px 20px;
+          cursor: pointer;
+      }
+      body {
+        background: #ffffff;
+        font-family: Helvetica;
+        font-size: 14px;
+      }
+      
+      .references_main_container {
+          display: flex;
+          justify-content: space-between;
+      }
+
+      .references_main_full {
+          padding: 20px;
+          background-color: white;
+          border-radius: 10px;
+          box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+          flex-basis: 97.5%;
+          height: 500px;
+          overflow-y: auto;
+      }
+      .openai_cover_letter_container {
+          display: flex;
+          flex-wrap: wrap;
+      }
+
+      .openai_cover_letter_left {
+          padding: 20px;
+          background-color: white;
+          border-radius: 10px;
+          box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+          flex-basis: 48%;
+          overflow-y: auto;
+          height: 500px;
+          margin: 10px;
+      }
+
+      .openai_cover_letter_right {
+          padding: 20px;
+          background-color: white;
+          border-radius: 10px;
+          box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+          flex-basis: 48%;
+          overflow-y: auto;
+          height: 500px;
+          margin: 10px;
+      }
+      @media (max-width: 768px) {
+          .openai_cover_letter_left,
+          .openai_cover_letter_right {
+              flex: 0 0 calc(100% - 20px);
+          }
+      }
+
+      .cl_main_container {
+          display: flex;
+          flex-wrap: wrap;
+      }
+
+      .cl_main_full {
+          padding: 20px;
+          background-color: white;
+          border-radius: 10px;
+          box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+          flex-basis: 97.5%;
+          height: 200px;
+          overflow-y: auto;
+          margin: 10px;
+      }
+
+      .cl_main_left {
+          padding: 20px;
+          background-color: white;
+          border-radius: 10px;
+          box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+          flex-basis: 48%;
+          height: 1000px;
+          overflow-y: auto;
+          margin: 10px;
+      }
+
+      .cl_main_right {
+          padding: 20px;
+          background-color: white;
+          border-radius: 10px;
+          box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+          flex-basis: 48%;
+          height: 1000px;
+          overflow-y: auto;
+          margin: 10px;
+      }
+      @media (max-width: 768px) {
+          .cl_main_left,
+          .cl_main_right {
+              flex: 0 0 calc(100% - 20px);
+          }
+      }
+      .cl_main_top, .cl_main_bottom {
+          flex: 1;
+          flex-basis: 49%;
+          flex-grow: 0;
+          flex-shrink: 0;
+          padding: 20px;
+          background-color: white;
+          border-radius: 10px;
+          box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+          height: 450px;
+          overflow-y: auto;
+          margin: 10px;
+      }
+      .cl_main_reference_top, .cl_main_reference_mid, .cl_main_reference_bottom {
+          flex: 1;
+          flex-basis: 33%;
+          flex-grow: 0;
+          flex-shrink: 0;
+          padding: 20px;
+          background-color: white;
+          border-radius: 10px;
+          box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+          margin: 10px;
+          height: 300px;
+          overflow-y: auto;
+      }
+      .jobs_container {
+          display: flex;
+          flex-wrap: wrap;
+      }
+
+      .jobs_left {
+          padding: 20px;
+          background-color: white;
+          border-radius: 10px;
+          box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+          flex-basis: 23%;
+          overflow-y: auto;
+          height: 500px;
+          margin: 10px;
+      }
+
+      .jobs_right {
+          padding: 20px;
+          background-color: white;
+          border-radius: 10px;
+          box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+          flex-basis: 73%;
+          overflow-y: auto;
+          height: 500px;
+          margin: 10px;
+      }
+      @media (max-width: 768px) {
+          .jobs_left,
+          .jobs_right {
+              flex: 0 0 calc(100% - 20px);
+          }
+      }
+      .cl_proofread_container {
+          display: flex;
+          flex-wrap: wrap;
+      }
+
+      .cl_proofread_left {
+          padding: 20px;
+          background-color: white;
+          border-radius: 10px;
+          box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+          flex-basis: 73%;
+          overflow-y: auto;
+          height: 500px;
+          margin: 10px;
+      }
+      
+      .cl_proofread_right {
+          padding: 20px;
+          background-color: white;
+          border-radius: 10px;
+          box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+          flex-basis: 23%;
+          overflow-y: auto;
+          height: 500px;
+          margin: 10px;
+      }
+      
+      @media (max-width: 768px) {
+          .cl_proofread_left,
+          .cl_proofread_right {
+              flex: 0 0 calc(100% - 20px);
+          }
+        }
+
+      table {
+          border-collapse: collapse;
+          width: 100%;
+      }
+
+      th, td {
+          border: 1px solid #dddddd;
+          text-align: left;
+          padding: 8px;
+      }
+
+      th {
+          background-color: #f2f2f2;
+      }
+      .login_register {
+          padding: 20px;
+          background-color: white;
+          border-radius: 10px;
+          box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+          flex-basis: 97.5%;
+          margin: 10px;
+      }
+  </style>
+</head>
+
+<body>
+
+  <!-- ======= Header ======= -->
+  <header id="header" class="fixed-top d-flex align-items-center">
+    <div class="container d-flex align-items-center justify-content-between">
+
+      <div class="logo">
+        <h1><a href="{% url 'home' %}">Job Application Bestie</a></h1>
+      </div>
+
+      <nav id="navbar" class="navbar">
+        <ul>
+          {% if user.is_authenticated %}
+            <li><a class="nav-link" href="{% url 'jobs' %}">Home</a></li>
+            <li><a class="nav-link" href="{% url 'references_main' %}">References</a></li>
+            <li><a class="nav-link" href="{% url 'openai_main' %}">ChatGPT-Settings</a></li>
+            <li><a class="nav-link" href="{% url 'logout_user' %}">Logout</a></li>
+          {% else %}
+            <li><a class="nav-link scrollto active" href="#hero">Home</a></li>
+            <li><a class="nav-link scrollto" href="#services">Services</a></li>
+            <li><a class="nav-link scrollto" href="#about">About</a></li>
+            <li><a class="nav-link scrollto" href="#faq">FAQ</a></li>
+            <li><a class="nav-link" href="{% url 'login_user' %}">Login</a></li>
+            <li><a class="getstarted scrollto" href="{% url 'register_user' %}">Register</a></li>
+          {% endif %}
+        </ul>
+        <i class="bi bi-list mobile-nav-toggle"></i>
+      </nav><!-- .navbar -->
+
+    </div>
+  </header><!-- End Header -->
+
+  
+
+  <main id="main">
+
+    {% block content %}
+    {% endblock %}
+
+  </main><!-- End #main -->
+
+  <!-- ======= Footer ======= -->
+  <footer id="footer">
+    <div class="container">
+      <div class="row d-flex align-items-center">
+        <div class="col-lg-6 text-lg-left text-center">
+          <div class="credits">
+            Designed by <a href="https://bootstrapmade.com/">BootstrapMade</a>
+          </div>
+        </div>
+        <div class="col-lg-6">
+          <nav class="footer-links text-lg-right text-center pt-2 pt-lg-0">
+            <a href="https://github.com/rohancode/Job-Application-Bestie">Source Code</a>
+            <a href="{% url 'data_security' %}">Data Security</a>
+            <a href="{% url 'privacy_policy' %}">Privacy Policy</a>
+            <a href="{% url 'terms_conditions' %}">Terms & Conditions</a>
+          </nav>
+        </div>
+      </div>
+    </div>
+  </footer><!-- End Footer -->
+
+  <a href="#" class="back-to-top d-flex align-items-center justify-content-center"><i class="bi bi-arrow-up-short"></i></a>
+
+  <!-- Vendor JS Files -->
+  <script src="{% static 'assets/vendor/purecounter/purecounter_vanilla.js' %}"></script>
+  <script src="{% static 'assets/vendor/aos/aos.js' %}"></script>
+  <script src="{% static 'assets/vendor/bootstrap/js/bootstrap.bundle.min.js' %}"></script>
+  <script src="{% static 'assets/vendor/glightbox/js/glightbox.min.js' %}"></script>
+  <script src="{% static 'assets/vendor/isotope-layout/isotope.pkgd.min.js' %}"></script>
+  <script src="{% static 'assets/vendor/swiper/swiper-bundle.min.js' %}"></script>
+
+  <!-- Template Main JS File -->
+  <script src="{% static 'assets/js/main.js' %}"></script>
+
+</body>
+
+</html>

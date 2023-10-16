@@ -1,28 +1,32 @@
-{% extends 'JAB_Main/base.html' %}
+{% extends 'JAB_Main/index/base_index.html' %}
 
 {% block content  %}
-
+<section class="inner-page"><br/><br/>
 {% if form.errors %}
 
     <div class="alert alert-warning alert-dismissible fade show" role="alert">
-        Oops! Something went wrong. Please review the following error details.
+        Oops! Something went wrong. Please make sure to have a unique user name and the password fulfills the conditions.
         <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
     </div>
 
 {% endif %}
-
+<div class="login_register">
 <h1>Register</h1>
-<br/>
+</div>
 
+<div class="login_register">
 <form action="{% url 'register_user' %}" method=POST>
     {% csrf_token %}
 
     {{ form.as_p  }}
 
-    <br/><br/>
+
     <input type="submit" value="Submit" class="btn btn-secondary">
 
 </form> 
+</div>
+<div class="login_register">
 <p>Please make sure to remember your username and password. We do not offer a password reset option since we do not collect email addresses.</p>
-
+</div>
+</section>
 {% endblock %}

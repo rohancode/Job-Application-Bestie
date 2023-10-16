@@ -42,7 +42,7 @@ def home(request):
     if request.user.is_authenticated:
         return HttpResponseRedirect(reverse('jobs'))
     else:
-        return render(request, 'JAB_Main/index.html', {})
+        return render(request, 'JAB_Main/index/index.html', {})
 
 def privacy_policy(request):
     return render(request, 'JAB_Main/privacy_policy.html', {})

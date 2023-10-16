@@ -1,85 +1,97 @@
-{% extends 'JAB_Main/base.html' %}
+{% extends 'JAB_Main/index/base_index.html' %}
 
 {% block content %}
-    <div class="jobs_container">
-        <p>Navigation: <a href="{% url 'jobs' %}">Jobs</a> &gt;</p>
-    </div>
-    <div class="jobs_container">
-        <div class="jobs_left">
-            <h4>Daily Sources</h4>
-            <a href="{% url 'source_add' %}">Add Source</a> 
-            <br/>
-            <br/>
-            <ul>
-                {% for source in sources_base %}
-                    <li><a href="{{ source }}">{{ source }}></a></li>
-                    <br/>
-                {% endfor %}
-                {% for source in sources_user %}
-                    <li>
-                        <a href="{{ source.link }}">{{ source.link }}</a>
-                        <a href="{% url 'source_update' source.id %}">Edit</a> 
-                        <a href="{% url 'source_delete' source.id  %}">Delete</a> 
-                    </li>
-                    <br/>
-                {% endfor %}
-            </ul>
-        </div>
-        <div class="jobs_right">
-            <h4>Jobs</h4>
-            <a href="{% url 'job_add' %}">Add Job</a>
-            <br/>
-            <br/>
-            <table>
-                <thead>
-                    <tr>
-                        <th>Added</th>
-                        <th>Company</th>
-                        <th>Position</th>
-                        <th>URL</th>
-                        <th>Cover Letter</th>
-                        <th>Resume (Coming Soon)</th>
-                        <th>Job Actions</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    {% for job in job_all %}
-                    <tr>
-                        <td>{{ job.date_add }}</td>
-                        <td>{{ job.company }}</td>
-                        <td>{{ job.position }}</td>
-                        <td>
-                            <a href="{{ job.URL }}">{{ job.URL }}</a>
-                        </td>
-                        <td>
-                            <a href="{% url 'cl_main' job.id %}">Cover Letter Builder</a> 
-                        </td>
-                        <td>
-                            Resume Builder
-                        </td>
-                        <td>
-                            <a href="{% url 'job_update' job.id %}">Edit</a> 
-                            <a href="{% url 'job_delete' job.id %}">Delete</a>
-                        </td>
-                    </tr>
-                    {% endfor %}
-                </tbody>
-            </table> 
-            <br/> 
-            {% if job_all.has_previous %}
-                <a href="?page=1">&laquo First</a>
-                <a href="?page={{ job_all.previous_page_number }}">Previous</a>
-            {% endif %}
-            Page {{ job_all.number }} of {{ job_all.paginator.num_pages }}
 
-            {% if job_all.has_next %}
-                <a href="?page={{ job_all.next_page_number }}">Next</a>
-                <a href="?page={{ job_all.paginator.num_pages }}">Last &raquo</a>
-            {% endif %}
-             
-            
+    <!-- ======= Breadcrumbs Section ======= -->
+    <section class="breadcrumbs">
+        <div class="container">
+          <div class="d-flex justify-content-between align-items-center">
+            <ol>
+              <li><a href="{% url 'jobs' %}">Jobs</a></li>
+              <li></li>
+            </ol>
+          </div>
         </div>
-    </div>
+      </section><!-- End Breadcrumbs Section -->
+
+    <section class="inner-page">
+       <div class="jobs_container">
+            <div class="jobs_left">
+                <h4>Daily Sources</h4>
+                <a href="{% url 'source_add' %}">Add Source</a> 
+                <br/>
+                <br/>
+                <ul>
+                    {% for source in sources_base %}
+                        <li><a href="{{ source }}">{{ source }}></a></li>
+                        <br/>
+                    {% endfor %}
+                    {% for source in sources_user %}
+                        <li>
+                            <a href="{{ source.link }}">{{ source.link }}</a>
+                            <a href="{% url 'source_update' source.id %}">Edit</a> 
+                            <a href="{% url 'source_delete' source.id  %}">Delete</a> 
+                        </li>
+                        <br/>
+                    {% endfor %}
+                </ul>
+            </div>
+            <div class="jobs_right">
+                <h4>Jobs</h4>
+                <a href="{% url 'job_add' %}">Add Job</a>
+                <br/>
+                <br/>
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Added</th>
+                            <th>Company</th>
+                            <th>Position</th>
+                            <th>URL</th>
+                            <th>Cover Letter</th>
+                            <th>Resume (Coming Soon)</th>
+                            <th>Job Actions</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for job in job_all %}
+                        <tr>
+                            <td>{{ job.date_add }}</td>
+                            <td>{{ job.company }}</td>
+                            <td>{{ job.position }}</td>
+                            <td>
+                                <a href="{{ job.URL }}">{{ job.URL }}</a>
+                            </td>
+                            <td>
+                                <a href="{% url 'cl_main' job.id %}">Cover Letter Builder</a> 
+                            </td>
+                            <td>
+                                Resume Builder
+                            </td>
+                            <td>
+                                <a href="{% url 'job_update' job.id %}">Edit</a> 
+                                <a href="{% url 'job_delete' job.id %}">Delete</a>
+                            </td>
+                        </tr>
+                        {% endfor %}
+                    </tbody>
+                </table> 
+                <br/> 
+                {% if job_all.has_previous %}
+                    <a href="?page=1">&laquo First</a>
+                    <a href="?page={{ job_all.previous_page_number }}">Previous</a>
+                {% endif %}
+                Page {{ job_all.number }} of {{ job_all.paginator.num_pages }}
+
+                {% if job_all.has_next %}
+                    <a href="?page={{ job_all.next_page_number }}">Next</a>
+                    <a href="?page={{ job_all.paginator.num_pages }}">Last &raquo</a>
+                {% endif %}
+                
+                
+            </div>
+        </div>
+    </section>
     
 
 {% endblock %}

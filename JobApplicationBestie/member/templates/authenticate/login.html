@@ -1,10 +1,11 @@
-{% extends 'JAB_Main/base.html' %}
+{% extends 'JAB_Main/index/base_index.html' %}
 
 {% block content  %}
-
+<section class="inner-page"><br/><br/>
+<div class="login_register">
 <h1>Login</h1>
-<br/>
-
+</div>
+<div class="login_register">
 <form action="" method=POST>
     {% csrf_token %}
     <div class="mb-3">
@@ -18,7 +19,10 @@
     <input type="submit" value="Submit" class="btn btn-secondary">
 </form>
 <br/>
+</div>
+<div class="login_register">
 <p>Please make sure to remember your username and password. We do not offer a password reset option since we do not collect email addresses.</p>
-
+</div>
+</section>
 
 {% endblock %}

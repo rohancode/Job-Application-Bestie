@@ -1,0 +1,177 @@
+{% extends 'JAB_Main/index/base_index.html' %}
+{% load static %}
+{% block content %}
+
+
+
+    <!-- ======= Hero Section ======= -->
+    <section id="hero" class="d-flex align-items-center">
+
+      <div class="container">
+        <div class="row">
+          <div class="col-lg-6 pt-5 pt-lg-0 order-2 order-lg-1 d-flex flex-column justify-content-center">
+            <h1 data-aos="fade-up">Craft personalized Cover Letters</h1>
+            <h2 data-aos="fade-up" data-aos-delay="400">Secure more Interviews, no Credit Card or Email required. 100% Free!</h2>
+            <div data-aos="fade-up" data-aos-delay="800">
+              <a href="{% url 'register_user' %}" class="btn-get-started scrollto">Register</a>
+            </div>
+          </div>
+          <div class="col-lg-6 order-1 order-lg-2 hero-img" data-aos="fade-left" data-aos-delay="200">
+            <img src="{% static 'assets/img/hero-img.png' %}" class="img-fluid animated" alt="">
+          </div>
+        </div>
+      </div>
+
+    </section><!-- End Hero -->
+    
+    <!-- ======= Services Section ======= -->
+    <section id="services" class="services">
+      <div class="container">
+
+        <div class="section-title" data-aos="fade-up">
+          <h2>Services</h2>
+          <p>Discover the key features that make our cover letter creation platform stand out</p>
+        </div>
+
+        <div class="row">
+          <div class="col-md-6 col-lg-3 d-flex align-items-stretch mb-5 mb-lg-0">
+            <div class="icon-box" data-aos="fade-up" data-aos-delay="100">
+              <div class="icon"><i class="bx bxl-dribbble"></i></div>
+              <h4 class="title"><a href="#">References</a></h4>
+              <p class="description">Find all the reference material needed to write a personalized cover letter in one place.</p>
+            </div>
+          </div>
+
+          <div class="col-md-6 col-lg-3 d-flex align-items-stretch mb-5 mb-lg-0">
+            <div class="icon-box" data-aos="fade-up" data-aos-delay="200">
+              <div class="icon"><i class="bx bx-file"></i></div>
+              <h4 class="title"><a href="#">AI Tools</a></h4>
+              <p class="description">Personalize your cover letter content with the use of AI and tune the results as needed.</p>
+            </div>
+          </div>
+
+          <div class="col-md-6 col-lg-3 d-flex align-items-stretch mb-5 mb-lg-0">
+            <div class="icon-box" data-aos="fade-up" data-aos-delay="300">
+              <div class="icon"><i class="bx bx-tachometer"></i></div>
+              <h4 class="title"><a href="#">PDF Download</a></h4>
+              <p class="description">Generate the cover letter in pdf format from the template.</p>
+            </div>
+          </div>
+
+          <div class="col-md-6 col-lg-3 d-flex align-items-stretch mb-5 mb-lg-0">
+            <div class="icon-box" data-aos="fade-up" data-aos-delay="400">
+              <div class="icon"><i class="bx bx-world"></i></div>
+              <h4 class="title"><a href="#">Dashboard</a></h4>
+              <p class="description">Source the jobs in one place with ease and keep track of applications in the dashboard.</p>
+            </div>
+          </div>
+
+        </div>
+
+      </div>
+    </section><!-- End Services Section -->
+
+    <!-- ======= About Us Section ======= -->
+    <section id="about" class="about">
+      <div class="container">
+
+        <div class="section-title" data-aos="fade-up">
+          <h2>About Us</h2>
+        </div>
+
+        <div class="row content">
+          <div class="col-lg-6" data-aos="fade-up" data-aos-delay="150">
+            <p>
+              Welcome to our innovative SaaS platform designed to revolutionize the way you create personalized cover letters. We understand the importance of crafting a compelling cover letter, and we're here to make the process easier and more effective for you.
+            </p>
+            <ul>
+              <li><i class="ri-check-double-line"></i> Effortlessly customize your cover letters</li>
+              <li><i class="ri-check-double-line"></i> Stand out with professionally written content</li>
+              <li><i class="ri-check-double-line"></i> Save time and stress in your job application process</li>
+            </ul>
+          </div>
+          <div class="col-lg-6 pt-4 pt-lg-0" data-aos="fade-up" data-aos-delay="300">
+            <p>
+              Our platform simplifies the process of creating personalized cover letters by providing you with a user-friendly interface and a vast library of customizable templates. Say goodbye to the hassle of crafting cover letters from scratch, and let us help you shine in your job applications.
+            </p>
+            <a href="#services" class="btn-learn-more">Learn More</a>
+          </div>
+        </div>
+
+      </div>
+    </section><!-- End About Us Section -->
+
+    <!-- ======= F.A.Q Section ======= -->
+    <section id="faq" class="faq">
+      <div class="container">
+
+        <div class="section-title" data-aos="fade-up">
+          <h2>Frequently Asked Questions</h2>
+        </div>
+
+        <div class="row faq-item d-flex align-items-stretch" data-aos="fade-up" data-aos-delay="300">
+          <div class="col-lg-5">
+            <i class="ri-question-line"></i>
+            <h4>Why do I have to register when email is not required?</h4>
+          </div>
+          <div class="col-lg-7">
+            <p>
+              Job application bestie is a completely free platform but it requires a user account to work. No email will be asked while registration.
+            </p>
+          </div>
+        </div><!-- End F.A.Q Item-->
+
+        <div class="row faq-item d-flex align-items-stretch" data-aos="fade-up" data-aos-delay="400">
+          <div class="col-lg-5">
+            <i class="ri-question-line"></i>
+            <h4>Is it 100% free?</h4>
+          </div>
+          <div class="col-lg-7">
+            <p>
+              Yes, Job Application Bestie is 100% free to use.
+            </p>
+          </div>
+        </div><!-- End F.A.Q Item-->
+
+        <div class="row faq-item d-flex align-items-stretch" data-aos="fade-up" data-aos-delay="500">
+          <div class="col-lg-5">
+            <i class="ri-question-line"></i>
+            <h4>Will I be charged for using AI features like ChatGPT?</h4>
+          </div>
+          <div class="col-lg-7">
+            <p>
+              To use the AI features, you need to add credit in your <a href="https://openai.com/">Open AI</a> account (creator of ChatGPT) and share the API with the product. We do not get any money when you add credits.
+            </p>
+          </div>
+        </div><!-- End F.A.Q Item-->
+
+        <div class="row faq-item d-flex align-items-stretch" data-aos="fade-up" data-aos-delay="400">
+          <div class="col-lg-5">
+            <i class="ri-question-line"></i>
+            <h4>Can I use the platform without the AI features?</h4>
+          </div>
+          <div class="col-lg-7">
+            <p>
+              Yes, Job Application Bestie can be used without the AI features!
+            </p>
+          </div>
+        </div><!-- End F.A.Q Item-->
+
+        <div class="row faq-item d-flex align-items-stretch" data-aos="fade-up" data-aos-delay="400">
+          <div class="col-lg-5">
+            <i class="ri-question-line"></i>
+            <h4>I forgot my username or password. How do I recover my account?</h4>
+          </div>
+          <div class="col-lg-7">
+            <p>
+              We do not ask or store user's email address and therefore cannot recover your account.
+            </p>
+          </div>
+        </div><!-- End F.A.Q Item-->
+
+      </div>
+    </section><!-- End F.A.Q Section -->
+
+    
+{% include 'JAB_Main/cookie_banner.html' %}
+{% endblock %}

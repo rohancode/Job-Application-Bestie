@@ -1,9 +1,21 @@
-{% extends 'JAB_Main/base.html' %}
+{% extends 'JAB_Main/index/base_index.html' %}
 
 {% block content %}
-    <div class="openai_cover_letter_container">
-        <p>Navigation: <a href="{% url 'jobs' %}">Jobs</a> &gt; <a href="{% url 'cl_main' job_case.id %}"> Cover Letter ({{ job_case.company }} / {{ job_case.position }})</a> &gt; ChatGPT Cover Letter &gt;</p>
+<!-- ======= Breadcrumbs Section ======= -->
+<section class="breadcrumbs">
+    <div class="container">
+        <div class="d-flex justify-content-between align-items-center">
+        <ol>
+            <li><a href="{% url 'jobs' %}">Jobs</a></li>
+            <li><a href="{% url 'cl_main' job_case.id %}"> Cover Letter ({{ job_case.company }} / {{ job_case.position }})</a></li>
+            <li>ChatGPT Cover Letter</li>
+            <li></li>
+        </ol>
+        </div>
     </div>
+</section><!-- End Breadcrumbs Section -->
+
+<section class="inner-page">
     <div class="openai_cover_letter_container">
         <div class="openai_cover_letter_left">
             <b>What are needs of the project?:</b> <br/>{{ cl_case.questionnaire_looking_for|linebreaks }}
@@ -20,5 +32,5 @@
             <b>ChatGPT Cover Letter:</b> <br/>{{ response|linebreaks }}
         </div>
     </div>
-
+</section>
 {% endblock %}

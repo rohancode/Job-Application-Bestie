@@ -1,9 +1,20 @@
-{% extends 'JAB_Main/base.html' %}
+{% extends 'JAB_Main/index/base_index.html' %}
 
 {% block content %}
-    <div class="jobs_container">
-        <p>Navigation: <a href="{% url 'references_main' %}">References</a> &gt;</p>
+
+<!-- ======= Breadcrumbs Section ======= -->
+<section class="breadcrumbs">
+    <div class="container">
+        <div class="d-flex justify-content-between align-items-center">
+        <ol>
+            <li><a href="{% url 'references_main' %}">References</a></li>
+            <li></li>
+        </ol>
+        </div>
     </div>
+</section><!-- End Breadcrumbs Section -->
+
+<section class="inner-page">
     <div class="references_main_container">
         <div class="references_main_full">  
             <h4>Projects</h4>
@@ -34,6 +45,6 @@
             {% endfor %}
         </div>
     </div>
-    
+</section>
 
 {% endblock %}
