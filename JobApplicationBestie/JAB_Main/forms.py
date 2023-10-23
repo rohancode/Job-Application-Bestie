@@ -1,6 +1,6 @@
 from django import forms
 from django.forms import ModelForm
-from .models import Job, CoverLetter, Source, ReferenceProject, Member
+from .models import Job, CoverLetter, Source, ReferenceProject, Member, Questionnaire, QuestionnaireCustom
 
 class JobForm(ModelForm):
     class Meta:
@@ -64,3 +64,13 @@ class Member_OpenaiAPI(ModelForm):
     class Meta:
         model = Member
         fields = ('openai_api',)
+
+class QuestionnaireForm(ModelForm):
+    class Meta:
+        model = Questionnaire
+        fields = ('questionnaire_que',)
+
+class QuestionnaireCustomForm(ModelForm):
+    class Meta:
+        model = QuestionnaireCustom
+        fields = ('questionnaire_ans',)

@@ -1,0 +1,33 @@
+{% if edit_mode_questionnaire %}
+<form action="" method="POST">
+    {% csrf_token %}
+    {{ form_questionnaire.management_form }}
+    <table>
+        {% for form in form_questionnaire %}
+        <tr>
+            {{ form.as_table }}
+        </tr>
+        {% endfor %}
+    </table>
+    <br/>
+    <input type="submit" value="Update" class="btn btn-secondary">
+</form>
+<a href="?edit_mode_questionnaire=0">Cancel</a>
+{% else %}
+<a href="?edit_mode_questionnaire=1">Edit Questions</a> (Note: Questions will be edited accross all the cover letters!)
+<br/><br/>
+{% for questionnaire in questionnaire_set %}
+    <li><b>Que: {{ questionnaire.questionnaire_que}}</b><a href="{% url 'questionnaire_delete' job_case.id questionnaire.id %}"> Delete Question</a>, <a href="{% url 'questionnaire_custom_add' job_case.id questionnaire.id %}"> Add Response</a></li>
+    {% if questionnaire.questionnaire_custom_questionnaire %}
+        <li>
+            Res: {% for questionnaire_custom_questionnaire in questionnaire.questionnaire_custom_questionnaire.all %}
+                {% if questionnaire_custom_questionnaire.job.id == job_case.id %}
+                    {{ questionnaire_custom_questionnaire.questionnaire_ans }}<a href="{% url 'questionnaire_custom_edit' job_case.id questionnaire_custom_questionnaire.id %}"> Edit Response</a></li>
+                {% endif %}
+            {% endfor %}
+    {% endif %}
+    <br/>
+{% endfor %}
+
+
+{% endif %}

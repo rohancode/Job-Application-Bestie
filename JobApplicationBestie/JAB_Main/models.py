@@ -108,6 +108,22 @@ class Source(models.Model):
     def __str__(self):
         return self.name
 
+class Questionnaire(models.Model):
+    questionnaire_que = models.CharField(default='', max_length=255, null=True, blank=True)
+    user = models.ForeignKey(User, on_delete=models.CASCADE, related_name='questionnaire_user', null=True)
+
+    def __str__(self):
+        return self.questionnaire_que
+
+class QuestionnaireCustom(models.Model):
+    questionnaire_ans = models.CharField(default='', max_length=255, null=True, blank=True)
+    job = models.ForeignKey(Job, on_delete=models.CASCADE, related_name='questionnaire_custom_job', null=True)
+    user = models.ForeignKey(User, on_delete=models.CASCADE, related_name='questionnaire_custom_user', null=True)
+    questionnaire = models.ForeignKey(Questionnaire, on_delete=models.CASCADE, related_name='questionnaire_custom_questionnaire', null=True)
+
+    def __str__(self):
+        return self.questionnaire_ans
+
 class UserConsent(models.Model):
     user_ip = models.GenericIPAddressField()
     timestamp = models.DateTimeField(auto_now_add=True)

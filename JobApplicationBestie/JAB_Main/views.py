@@ -5,10 +5,11 @@ from pathlib import Path
 from django.shortcuts import render, redirect, reverse
 from django.contrib.auth.decorators import login_required
 from django.http import HttpResponse, FileResponse
+from django.forms import modelformset_factory
 from .forms import JobForm, CLForm, CLForm_Text, CLForm_Main, SourceForm, JobForm_ReferenceNotes, JobCaseSelectionForm, JobForm_Company, ReferenceProjectForm
-from .forms import Member_OpenaiAPI
+from .forms import Member_OpenaiAPI, QuestionnaireForm, QuestionnaireCustomForm
 from django.http import HttpResponseRedirect, JsonResponse
-from .models import Job, CoverLetter, Source, UserConsent, ReferenceProject, Member
+from .models import Job, CoverLetter, Source, UserConsent, ReferenceProject, Member, Questionnaire, QuestionnaireCustom
 from django.contrib.auth.models import User
 from django.core.paginator import Paginator
 
@@ -25,17 +26,17 @@ from retrying import retry
 
 @login_required
 def temp(request):
-    if request.user.is_authenticated:
-        if request.user.is_superuser:
-            users = User.objects.all()
-            for user in users:
-                member = Member(user=user)
-                member.save()
-            return redirect('jobs')
-        else:
-            pass
-    else:
-        pass
+    # if request.user.is_authenticated:
+    #     if request.user.is_superuser:
+    #         users = User.objects.all()
+    #         for user in users:
+    #             qc = QuestionnaireCustom(user=user, questionnaire="x", questionnaire_ans="b")
+    #             qc.save()
+    #         return redirect('jobs')
+    #     else:
+    #         pass
+    # else:
+    #     pass
     return redirect('jobs')
 
 def home(request):
@@ -137,9 +138,12 @@ def cl_main(request, job_id):
     job_case = Job.objects.get(pk=job_id, user=current_user)
     cl_case = job_case.cover_letters_job
     reference_project_cases = ReferenceProject.objects.filter(user=current_user).order_by('-id')
+    questionnaire_set = Questionnaire.objects.filter(user=current_user)
+    
     edit_mode_text = request.GET.get('edit_mode_text', '0') == '1'
     edit_mode_update = request.GET.get('edit_mode_update', '0') == '1'
     edit_mode_reference_notes = request.GET.get('edit_mode_reference_notes', '0') == '1'
+    edit_mode_questionnaire = request.GET.get('edit_mode_questionnaire', '0') == '1'
     
     if request.method == "POST" and edit_mode_text:
         form_text = CLForm_Text(request.POST, instance=cl_case)
@@ -168,6 +172,16 @@ def cl_main(request, job_id):
     else:
         form_reference_notes = JobForm_ReferenceNotes(instance=job_case)
 
+    QuestionnaireFormSet = modelformset_factory(Questionnaire, form=QuestionnaireForm, extra=0, max_num=5)
+    if request.method == "POST" and edit_mode_questionnaire:
+        form_questionnaire = QuestionnaireFormSet(request.POST, queryset=questionnaire_set)
+        if form_questionnaire.is_valid() and request.GET.get('edit_mode_questionnaire', '0') == '1':
+            form_questionnaire.save()
+            job_id = cl_case.job.id
+            return HttpResponseRedirect(reverse('cl_main', args=[job_id]))
+    else:
+        form_questionnaire = QuestionnaireFormSet(queryset=questionnaire_set)
+
     selected_job_case = None
     if request.method == 'POST':
         form_job_case = JobCaseSelectionForm(current_user, request.POST)
@@ -193,6 +207,9 @@ def cl_main(request, job_id):
         'selected_job_case': selected_job_case,
         'reference_project_cases': reference_project_cases,
         'member':member,
+        'form_questionnaire':form_questionnaire,
+        'edit_mode_questionnaire':edit_mode_questionnaire,
+        'questionnaire_set':questionnaire_set,
     })
 
 @login_required
@@ -570,4 +587,68 @@ def openai_cover_letter(request, job_id):
         'response': response,
         'job_case': job_case,
         'cl_case': cl_case
+    })
+
+@login_required
+def questionnaire_add(request, job_id):
+    submitted = False
+    if request.method == 'POST':
+        form = QuestionnaireForm(request.POST)
+        if form.is_valid():
+            current_user = request.user
+            job_case = Job.objects.get(pk=job_id, user=current_user)
+            job_id = job_case.id
+            form_case = form.save(commit=False)
+            form_case.user = current_user
+            form_case.save()
+            return HttpResponseRedirect(reverse('cl_main', args=[job_id]))
+
+    else:   
+        form = QuestionnaireForm
+        if 'submitted' in request.GET:
+            submitted = True 
+    return render(request, 'JAB_Main/questionnaire_add.html', {'form':form, 'submitted':submitted})
+
+@login_required
+def questionnaire_delete(request, job_id, questionnaire_id):
+    current_user = request.user
+    questionnaire_case = Questionnaire.objects.get(pk=questionnaire_id, user=current_user) 
+    questionnaire_case.delete()
+    return HttpResponseRedirect(reverse('cl_main', args=[job_id]))
+
+@login_required
+def questionnaire_custom_add(request, job_id, questionnaire_id):
+    submitted = False
+    if request.method == 'POST':
+        form = QuestionnaireCustomForm(request.POST)
+        if form.is_valid():
+            current_user = request.user
+            job_case = Job.objects.get(pk=job_id, user=current_user)
+            questionnaire_case = Questionnaire.objects.get(pk=questionnaire_id, user=current_user)
+            form_case = form.save(commit=False)
+            form_case.user = current_user
+            form_case.job = job_case
+            form_case.questionnaire = questionnaire_case
+            form_case.save()
+            return HttpResponseRedirect(reverse('cl_main', args=[job_id]))
+
+    else:   
+        form = QuestionnaireCustomForm
+        if 'submitted' in request.GET:
+            submitted = True 
+    return render(request, 'JAB_Main/questionnaire_custom_add.html', {'form':form, 'submitted':submitted})
+
+
+@login_required
+def questionnaire_custom_edit(request, job_id, questionnaire_custom_id):
+    current_user = request.user
+    questionnaire_custom_case = QuestionnaireCustom.objects.get(pk=questionnaire_custom_id, user=current_user, job=job_id)
+    form = QuestionnaireCustomForm(request.POST or None, instance=questionnaire_custom_case)
+    if form.is_valid():
+        form.save()
+        return HttpResponseRedirect(reverse('cl_main', args=[job_id]))
+
+    return render(request, 'JAB_Main/questionnaire_custom_edit.html', {
+        'questionnaire_custom_case':questionnaire_custom_case,
+        'form':form
     })

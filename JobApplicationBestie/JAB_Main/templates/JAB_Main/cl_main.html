@@ -36,6 +36,12 @@
                         <br/>
                         {% include 'JAB_Main/cl_main_update_include.html' %}
                     </div>
+                    <br/>
+                    <h4>Custom Questionnaire</h4>
+                    <a href="{% url 'questionnaire_add' job_case.id %}">Add Question</a> 
+                    <div>
+                        {% include 'JAB_Main/cl_main_questionnaire_include.html' %}
+                    </div>
                 </div>
                 <div class="cl_main_bottom">
                     <h4>Cover Letter Final</h4>

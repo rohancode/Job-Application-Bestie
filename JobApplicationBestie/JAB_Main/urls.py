@@ -33,6 +33,11 @@ urlpatterns = [
     path('openai_api_test', views.openai_api_test, name='openai_api_test'),
     path('openai_api_delete', views.openai_api_delete, name='openai_api_delete'),
     path('openai_cover_letter/<job_id>', views.openai_cover_letter, name='openai_cover_letter'),
+
+    path('questionnaire/<job_id>/add', views.questionnaire_add, name='questionnaire_add'),
+    path('questionnaire/<job_id>/<questionnaire_id>/delete', views.questionnaire_delete, name='questionnaire_delete'),
+    path('questionnaire_custom/<job_id>/<questionnaire_id>/add', views.questionnaire_custom_add, name='questionnaire_custom_add'),
+    path('questionnaire_custom/<job_id>/<questionnaire_custom_id>/edit', views.questionnaire_custom_edit, name='questionnaire_custom_edit'),
     
     path('temp', views.temp, name='temp'),
     path('ui_dev_index_footer', views.ui_dev_index_footer, name='ui_dev_index_footer'),

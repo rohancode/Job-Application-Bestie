@@ -14,7 +14,7 @@ def login_user(request):
             login(request, user)
             return redirect('jobs')
         else:
-            messages.success(request, ("Username or password does not match!"))
+            messages.error(request, ("Oops! Something went wrong. Username or password does not match."))
             return redirect('login_user')
     else:
         return render(request, 'authenticate/login.html',{})

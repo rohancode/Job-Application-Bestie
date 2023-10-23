@@ -1,0 +1,21 @@
+{% extends 'JAB_Main/index/base_index.html' %}
+
+{% block content %}
+<section class="inner-page"><br/><br/>
+    <center>
+        <h1>Add Questionnaire</h1>
+        <br/><br/>
+        {% if submitted %}
+            Questionnaire Added Successfully!
+        {% else %}
+            <form action="" method="POST">
+                {% csrf_token %}
+                {{ form.as_p }}
+                <input type="submit" value="Submit" class="btn btn-secondary">
+            </form>
+        {% endif %}
+
+         
+    </center>
+</section>
+{% endblock %}
