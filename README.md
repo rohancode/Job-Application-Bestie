@@ -3,7 +3,7 @@
 Welcome to our innovative platform designed to revolutionize the way you create personalized cover letters. We understand the importance of crafting a compelling cover letter, and we're here to make the process easier and more effective for you.
 
 # Production Live 
-    [https://jobappbestie.pythonanywhere.com/](https://jobappbestie.pythonanywhere.com/)
+   [https://jobappbestie.pythonanywhere.com/](https://jobappbestie.pythonanywhere.com/)
     
 
 ## Features
