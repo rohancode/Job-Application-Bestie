@@ -20,7 +20,7 @@
     <li><b>Que: {{ questionnaire.questionnaire_que}}</b><a href="{% url 'questionnaire_delete' job_case.id questionnaire.id %}"> Delete Question</a>, <a href="{% url 'questionnaire_custom_add' job_case.id questionnaire.id %}"> Add Response</a></li>
     {% if questionnaire.questionnaire_custom_questionnaire %}
         <li>
-            Res: {% for questionnaire_custom_questionnaire in questionnaire.questionnaire_custom_questionnaire.all %}
+            Ans: {% for questionnaire_custom_questionnaire in questionnaire.questionnaire_custom_questionnaire.all %}
                 {% if questionnaire_custom_questionnaire.job.id == job_case.id %}
                     {{ questionnaire_custom_questionnaire.questionnaire_ans }}<a href="{% url 'questionnaire_custom_edit' job_case.id questionnaire_custom_questionnaire.id %}"> Edit Response</a></li>
                 {% endif %}

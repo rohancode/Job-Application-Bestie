@@ -151,7 +151,8 @@ USE_TZ = True
 
 STATIC_URL = '/static/'
 STATICFILES_DIRS = [
-    os.path.join(BASE_DIR, 'JobApplicationBestie/JAB_Main/templates/JAB_Main/index')
+    os.path.join(BASE_DIR, 'JobApplicationBestie/JAB_Main/templates/JAB_Main/index'),
+    os.path.join(BASE_DIR, 'JobApplicationBestie/JAB_Main/templates/JAB_Main')
 ]
 STATIC_ROOT = os.path.join(BASE_DIR, 'JobApplicationBestie/assets')
 

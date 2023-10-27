@@ -1,4 +1,5 @@
 {% extends 'JAB_Main/index/base_index.html' %}
+{% load static %}
 
 {% block content %}
 
@@ -38,53 +39,61 @@
             </div>
             <div class="jobs_right">
                 <h4>Jobs</h4>
-                <a href="{% url 'job_add' %}">Add Job</a>
+                <div class="jobs-button-container">
+                    <a href="{% url 'job_add' %}">Add Job</a>
+                    <a href="{% url 'cl_add' %}">Add Cover Letter</a>
+                </div>
                 <br/>
                 <br/>
-                <table>
-                    <thead>
-                        <tr>
-                            <th>Added</th>
-                            <th>Company</th>
-                            <th>Position</th>
-                            <th>Cover Letter</th>
-                            <th>Resume (Coming Soon)</th>
-                            <th>Job Actions</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        {% for job in job_all %}
-                        <tr>
-                            <td>{{ job.date_add|date:"F j, Y" }}</td>
-                            <td>{{ job.company }}</td>
-                            <td><a href="{{ job.URL }}">{{ job.position }}</a></td>
-                            <td>
-                                <a href="{% url 'cl_main' job.id %}">Cover Letter Builder</a> 
-                            </td>
-                            <td>
-                                Resume Builder
-                            </td>
-                            <td>
-                                <a href="{% url 'job_update' job.id %}">Edit</a> 
-                                <a href="{% url 'job_delete' job.id %}">Delete</a>
-                            </td>
-                        </tr>
-                        {% endfor %}
-                    </tbody>
-                </table> 
-                <br/> 
-                {% if job_all.has_previous %}
-                    <a href="?page=1">&laquo First</a>
-                    <a href="?page={{ job_all.previous_page_number }}">Previous</a>
-                {% endif %}
-                Page {{ job_all.number }} of {{ job_all.paginator.num_pages }}
+                {% if job_all %}
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>Added</th>
+                                <th>Company</th>
+                                <th>Position</th>
+                                <th>Cover Letter</th>
+                                <th>Resume (Coming Soon)</th>
+                                <th>Job Actions</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {% for job in job_all %}
+                            <tr>
+                                <td>{{ job.date_add|date:"F j, Y" }}</td>
+                                <td>{{ job.company }}</td>
+                                <td><a href="{{ job.URL }}">{{ job.position }}</a></td>
+                                <td>
+                                    <a href="{% url 'cl_main' job.id %}">Cover Letter Builder</a> 
+                                </td>
+                                <td>
+                                    Resume Builder
+                                </td>
+                                <td>
+                                    <a href="{% url 'job_update' job.id %}">Edit</a> 
+                                    <a href="{% url 'job_delete' job.id %}">Delete</a>
+                                </td>
+                            </tr>
+                            {% endfor %}
+                        </tbody>
+                    </table> 
+                    <br/> 
+                    {% if job_all.has_previous %}
+                        <a href="?page=1">&laquo First</a>
+                        <a href="?page={{ job_all.previous_page_number }}">Previous</a>
+                    {% endif %}
+                    Page {{ job_all.number }} of {{ job_all.paginator.num_pages }}
 
-                {% if job_all.has_next %}
-                    <a href="?page={{ job_all.next_page_number }}">Next</a>
-                    <a href="?page={{ job_all.paginator.num_pages }}">Last &raquo</a>
+                    {% if job_all.has_next %}
+                        <a href="?page={{ job_all.next_page_number }}">Next</a>
+                        <a href="?page={{ job_all.paginator.num_pages }}">Last &raquo</a>
+                    {% endif %}
+                {% else %}
+                    <br><br><br>
+                    <div class="jobs-center-content">
+                        <img src="{% static 'assets/img/jobs_banner.png' %}">
+                    </div>
                 {% endif %}
-                
-                
             </div>
         </div>
     </section>

@@ -132,6 +132,15 @@ def job_delete(request, job_id):
     return redirect('jobs')
 
 @login_required
+def cl_add(request):
+    current_user = request.user
+    job = Job.objects.create(user=current_user)
+    cover_letter = CoverLetter(job=job, user=current_user)
+    cover_letter.save()
+    job_id = job.id
+    return HttpResponseRedirect(reverse('cl_main', args=[job_id]))
+
+@login_required
 def cl_main(request, job_id):
     current_user = request.user
     member = Member.objects.get(user=current_user)

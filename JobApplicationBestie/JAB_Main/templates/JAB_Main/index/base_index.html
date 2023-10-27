@@ -213,6 +213,29 @@
               flex: 0 0 calc(100% - 20px);
           }
       }
+      .jobs-button-container {
+          text-align: center;
+      }
+
+      .jobs-button-container a {
+          display: inline-block;
+          margin: 5px;
+      }
+
+      .jobs-button-container a:first-child {
+          float: left;
+      }
+
+      .jobs-button-container a:last-child {
+          float: right;
+      }
+
+      .jobs-center-content {
+          display: flex;
+          justify-content: center;
+          align-items: center;
+      }
+
       .cl_proofread_container {
           display: flex;
           flex-wrap: wrap;
@@ -261,6 +284,10 @@
       th {
           background-color: #f2f2f2;
       }
+      img {
+          max-width: 100%;
+          height: auto;
+      }
       .login_register {
           padding: 20px;
           background-color: white;
@@ -290,12 +317,19 @@
             <li><a class="nav-link" href="{% url 'openai_main' %}">ChatGPT-Settings</a></li>
             <li><a class="nav-link" href="{% url 'logout_user' %}">Logout</a></li>
           {% else %}
-            <li><a class="nav-link scrollto active" href="#hero">Home</a></li>
-            <li><a class="nav-link scrollto" href="#services">Services</a></li>
-            <li><a class="nav-link scrollto" href="#about">About</a></li>
-            <li><a class="nav-link scrollto" href="#faq">FAQ</a></li>
-            <li><a class="nav-link" href="{% url 'login_user' %}">Login</a></li>
-            <li><a class="getstarted scrollto" href="{% url 'register_user' %}">Register</a></li>
+            {% if request.resolver_match.url_name == 'home' %}
+              <li><a class="nav-link scrollto active" href="#hero">Home</a></li>
+              <li><a class="nav-link scrollto" href="#services">Services</a></li>
+              <li><a class="nav-link scrollto" href="#about">About</a></li>
+              <li><a class="nav-link scrollto" href="#faq">FAQ</a></li>
+              <li><a class="nav-link" href="{% url 'login_user' %}">Login</a></li>
+              <li><a class="getstarted scrollto" href="{% url 'register_user' %}">Register</a></li>
+            {% else %}
+              <li><a class="nav-link" href="{% url 'home' %}">Home</a></li>
+              <li><a class="nav-link" href="{% url 'login_user' %}">Login</a></li>
+              <li><a class="getstarted scrollto" href="{% url 'register_user' %}">Register</a></li>
+            {% endif %}
+            
           {% endif %}
         </ul>
         <i class="bi bi-list mobile-nav-toggle"></i>
